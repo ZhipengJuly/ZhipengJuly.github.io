@@ -236,8 +236,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/11/30/invitation/" itemprop="url">
-                  invitation
+                <a class="post-title-link" href="/2016/11/10/Java 线程Thread.join()/" itemprop="url">
+                  Thread.join()的含义及用法
                 </a>
               
             
@@ -250,8 +250,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-11-29T22:38:35Z" content="2016-11-29">
-              2016-11-29
+            <time itemprop="dateCreated" datetime="2016-11-09T21:29:29Z" content="2016-11-09">
+              2016-11-09
             </time>
           </span>
 
@@ -280,108 +280,18 @@
       
         
           
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/12/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-12T15:26:44Z" content="2016-10-12">
-              2016-10-12
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+            <h2 id="Thread-join-的含义及用法"><a href="#Thread-join-的含义及用法" class="headerlink" title="Thread.join()的含义及用法"></a>Thread.join()的含义及用法</h2><p>理解join()方法的含义，我们借助图形来理解，有下面的场景：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ThreadA-&gt;&gt; ThreadB: start ThreadB,and call ThreadB.join()</div><div class="line">ThreadB-&gt;&gt; ThreadA: I have done,you can go on</div></pre></td></tr></table></figure>
+<p>  ThreadA启动ThreadB,然后调用ThredB.join()方法，这个时候，ThreadA会被阻塞，直到ThreadB运行结束，ThreadA才继续往下执行。</p>
+<p>  看下面的例子，一目了然。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.zhuzp.test.concurrence;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JoinLearn</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * <span class="doctag">@param</span> args</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"></div><div class="line">		joinThread();</div><div class="line">		runInMain();</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">joinThread</span><span class="params">()</span></span>&#123;</div><div class="line">		Thread t = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">			</div><div class="line">			<span class="meta">@Override</span></div><div class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</div><div class="line">					System.out.println(<span class="string">"i: "</span> + i);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">		t.start();</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">runInMain</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</div><div class="line">			System.out.println(<span class="string">"runInMain: "</span> + i);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&emsp; joinThread()方法中没有调用t.join，只是启动了线程t。看下结果(部分结果)：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">runInMain: <span class="number">0</span></div><div class="line">i: <span class="number">0</span></div><div class="line">i: <span class="number">1</span></div><div class="line">runInMain: <span class="number">1</span></div><div class="line">runInMain: <span class="number">2</span></div><div class="line">runInMain: <span class="number">3</span></div><div class="line">runInMain: <span class="number">4</span></div><div class="line">runInMain: <span class="number">5</span></div><div class="line">runInMain: <span class="number">6</span></div><div class="line">runInMain: <span class="number">7</span></div><div class="line">runInMain: <span class="number">8</span></div><div class="line">runInMain: <span class="number">9</span></div><div class="line">runInMain: <span class="number">10</span></div><div class="line">runInMain: <span class="number">11</span></div><div class="line">runInMain: <span class="number">12</span></div><div class="line">runInMain: <span class="number">13</span></div><div class="line">runInMain: <span class="number">14</span></div><div class="line">runInMain: <span class="number">15</span></div><div class="line">runInMain: <span class="number">16</span></div><div class="line">runInMain: <span class="number">17</span></div><div class="line">runInMain: <span class="number">18</span></div><div class="line">runInMain: <span class="number">19</span></div><div class="line">runInMain: <span class="number">20</span></div><div class="line">i: <span class="number">2</span></div><div class="line">i: <span class="number">3</span></div><div class="line">i: <span class="number">4</span></div><div class="line">i: <span class="number">5</span></div><div class="line">i: <span class="number">6</span></div><div class="line">i: <span class="number">7</span></div></pre></td></tr></table></figure>
+<p>这种结果很容易理解。主线程中启动了一个子线程，然后继续往下执行了。然后看下如果调用了join()的结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.zhuzp.test.concurrence;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JoinLearn</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * <span class="doctag">@param</span> args</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"></div><div class="line">		joinThread();</div><div class="line">		runInMain();</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">joinThread</span><span class="params">()</span></span>&#123;</div><div class="line">		Thread t = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">			</div><div class="line">			<span class="meta">@Override</span></div><div class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</div><div class="line">					System.out.println(<span class="string">"i: "</span> + i);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">		</div><div class="line">		t.start();</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			t.join();</div><div class="line">		&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">runInMain</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</div><div class="line">			System.out.println(<span class="string">"runInMain: "</span> + i);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&emsp; 部分结果如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">i: <span class="number">84</span></div><div class="line">i: <span class="number">85</span></div><div class="line">i: <span class="number">86</span></div><div class="line">i: <span class="number">87</span></div><div class="line">i: <span class="number">88</span></div><div class="line">i: <span class="number">89</span></div><div class="line">i: <span class="number">90</span></div><div class="line">i: <span class="number">91</span></div><div class="line">i: <span class="number">92</span></div><div class="line">i: <span class="number">93</span></div><div class="line">i: <span class="number">94</span></div><div class="line">i: <span class="number">95</span></div><div class="line">i: <span class="number">96</span></div><div class="line">i: <span class="number">97</span></div><div class="line">i: <span class="number">98</span></div><div class="line">i: <span class="number">99</span></div><div class="line">runInMain: <span class="number">0</span></div><div class="line">runInMain: <span class="number">1</span></div><div class="line">runInMain: <span class="number">2</span></div><div class="line">runInMain: <span class="number">3</span></div><div class="line">runInMain: <span class="number">4</span></div><div class="line">runInMain: <span class="number">5</span></div><div class="line">runInMain: <span class="number">6</span></div><div class="line">runInMain: <span class="number">7</span></div><div class="line">runInMain: <span class="number">8</span></div><div class="line">runInMain: <span class="number">9</span></div><div class="line">runInMain: <span class="number">10</span></div><div class="line">runInMain: <span class="number">11</span></div><div class="line">runInMain: <span class="number">12</span></div><div class="line">runInMain: <span class="number">13</span></div><div class="line">runInMain: <span class="number">14</span></div></pre></td></tr></table></figure>
+<p>当主线程调用子线程的join()方法后，主线程被阻塞，处于等待的状态，等到子线程执行完成后，才继续往下执行。所以就有上面的结果了。是不是很easy 呢。</p>
 
           
         
@@ -451,13 +361,20 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">1</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           
 
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
           
 
         </nav>
