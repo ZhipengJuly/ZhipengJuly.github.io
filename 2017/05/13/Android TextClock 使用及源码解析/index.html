@@ -1,0 +1,734 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,TextClock," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Android TextClock 使用及源码解析
+TextClock 是Android用于显示当前时间或者日期的控件，并且支持用户自定义的日期或者时间格式。
+
+使用 比如我们要做一个下面效果图的界面，这里我们就可以使用TextClock来实现。
+
+1，时间 上面效果图中的时间，我们该怎么做呢，我们可以用一个TextClock实现
+12345678&amp;lt;TextClock    android:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android TextClock 使用及源码解析">
+<meta property="og:url" content="http://yoursite.com/2017/05/13/Android TextClock 使用及源码解析/index.html">
+<meta property="og:site_name" content="Blog of shymanzhu">
+<meta property="og:description" content="Android TextClock 使用及源码解析
+TextClock 是Android用于显示当前时间或者日期的控件，并且支持用户自定义的日期或者时间格式。
+
+使用 比如我们要做一个下面效果图的界面，这里我们就可以使用TextClock来实现。
+
+1，时间 上面效果图中的时间，我们该怎么做呢，我们可以用一个TextClock实现
+12345678&amp;lt;TextClock    android:">
+<meta property="og:image" content="http://note.youdao.com/yws/public/resource/5829bf99d392b3520cd5d3988fe14eeb/xmlnote/C0C15704DBF44375AE98C72028D69AFC/12074">
+<meta property="og:image" content="http://note.youdao.com/yws/public/resource/5829bf99d392b3520cd5d3988fe14eeb/xmlnote/5528D3E4C8054A91958380D1E05950E7/12137">
+<meta property="og:updated_time" content="2017-05-12T15:55:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android TextClock 使用及源码解析">
+<meta name="twitter:description" content="Android TextClock 使用及源码解析
+TextClock 是Android用于显示当前时间或者日期的控件，并且支持用户自定义的日期或者时间格式。
+
+使用 比如我们要做一个下面效果图的界面，这里我们就可以使用TextClock来实现。
+
+1，时间 上面效果图中的时间，我们该怎么做呢，我们可以用一个TextClock实现
+12345678&amp;lt;TextClock    android:">
+<meta name="twitter:image" content="http://note.youdao.com/yws/public/resource/5829bf99d392b3520cd5d3988fe14eeb/xmlnote/C0C15704DBF44375AE98C72028D69AFC/12074">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/13/Android TextClock 使用及源码解析/"/>
+
+
+
+
+
+  <title> Android TextClock 使用及源码解析 | Blog of shymanzhu </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blog of shymanzhu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Android TextClock 使用及源码解析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="shymanzhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog of shymanzhu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android TextClock 使用及源码解析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-12T23:29:30Z">
+                2017-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Android-TextClock-使用及源码解析"><a href="#Android-TextClock-使用及源码解析" class="headerlink" title="Android TextClock 使用及源码解析"></a>Android TextClock 使用及源码解析</h1><blockquote>
+<p>TextClock 是Android用于显示当前时间或者日期的控件，并且支持用户自定义的日期或者时间格式。</p>
+</blockquote>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p> 比如我们要做一个下面效果图的界面，这里我们就可以使用TextClock来实现。</p>
+<p><img src="http://note.youdao.com/yws/public/resource/5829bf99d392b3520cd5d3988fe14eeb/xmlnote/C0C15704DBF44375AE98C72028D69AFC/12074" alt="iamge"></p>
+<h3 id="1，时间"><a href="#1，时间" class="headerlink" title="1，时间"></a>1，时间</h3><p> 上面效果图中的时间，我们该怎么做呢，我们可以用一个TextClock实现</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">TextClock</span></span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/main_date"</span></div><div class="line">    <span class="attr">style</span>=<span class="string">"@style/MainDateStyle"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"@dimen/main_date_width"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:layout_marginTop</span>=<span class="string">"50dp"</span></div><div class="line">    <span class="attr">android:format12Hour</span>=<span class="string">"@string/main_date_format12"</span></div><div class="line">    <span class="attr">android:format24Hour</span>=<span class="string">"@string/main_date_format24"</span>/&gt;</div></pre></td></tr></table></figure>
+<p>其中<code>android:format12Hour</code> 表示12小时制格式，<code>android:format24Hour</code> 表示24小时制格式，对应的string资源是：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"main_date_format12"</span>&gt;</span>h &amp;#160;&amp;#160;&amp;#160;mm<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"main_date_format24"</span>&gt;</span>HH &amp;#160;&amp;#160;mm<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这里是通过<code>&amp;#160;</code> 来实现空格。但是这个时候就会有个问题：怎么识别不同的分辨率呢，因为中间的空格毕竟不好控制。嗯，或许你已经想到了，我们可以用两个TextClock来实现：一个表示小时，另一个表示分钟：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:layout_centerHorizontal</span>=<span class="string">"true"</span></div><div class="line">    <span class="attr">android:orientation</span>=<span class="string">"horizontal"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">TextClock</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/main_date"</span></div><div class="line">        <span class="attr">style</span>=<span class="string">"@style/MainDateStyle"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"@dimen/main_date_width"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_marginTop</span>=<span class="string">"50dp"</span></div><div class="line">        <span class="attr">android:format12Hour</span>=<span class="string">"h"</span></div><div class="line">        <span class="attr">android:format24Hour</span>=<span class="string">"HH"</span>/&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">TextClock</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/main_date1"</span></div><div class="line">        <span class="attr">style</span>=<span class="string">"@style/MainDateStyle"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"@dimen/main_date_width"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_marginStart</span>=<span class="string">"55dip"</span></div><div class="line">        <span class="attr">android:layout_marginTop</span>=<span class="string">"50dp"</span></div><div class="line">        <span class="attr">android:format12Hour</span>=<span class="string">"mm"</span></div><div class="line">        <span class="attr">android:format24Hour</span>=<span class="string">"mm"</span>/&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="2，日期"><a href="#2，日期" class="headerlink" title="2，日期"></a>2，日期</h3><p> 对应日期的使用和时间类似，主要的还是修改<code>android:format12Hour</code> 和<code>android:format24Hour</code> ，就拿上面的效果图来讲，我们可以这样实现：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">TextClock</span></span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/main_time"</span></div><div class="line">    <span class="attr">style</span>=<span class="string">"@style/MainTimeStyle"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:layout_alignParentBottom</span>=<span class="string">"true"</span></div><div class="line">    <span class="attr">android:layout_centerHorizontal</span>=<span class="string">"true"</span></div><div class="line">    <span class="attr">android:format12Hour</span>=<span class="string">"@string/main_time_format"</span></div><div class="line">    <span class="attr">android:format24Hour</span>=<span class="string">"@string/main_time_format"</span></div><div class="line">    <span class="attr">android:paddingBottom</span>=<span class="string">"30dp"</span>/&gt;</div></pre></td></tr></table></figure>
+<p>对应的string文件定义如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--默认格式--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"main_time_format"</span>&gt;</span>yyyy/M/d &amp;#160;&amp;#160; EEE<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!--中文格式--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"main_time_format"</span>&gt;</span>yyyy年M月d日&amp;#160;&amp;#160;EEE<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>整个布局文件如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span></span></div><div class="line">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:background</span>=<span class="string">"@drawable/bg_date_time"</span></div><div class="line">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_centerHorizontal</span>=<span class="string">"true"</span></div><div class="line">        <span class="attr">android:orientation</span>=<span class="string">"horizontal"</span>&gt;</div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">TextClock</span></span></div><div class="line">            <span class="attr">android:id</span>=<span class="string">"@+id/main_date"</span></div><div class="line">            <span class="attr">style</span>=<span class="string">"@style/MainDateStyle"</span></div><div class="line">            <span class="attr">android:layout_width</span>=<span class="string">"@dimen/main_date_width"</span></div><div class="line">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">            <span class="attr">android:layout_marginTop</span>=<span class="string">"40dp"</span></div><div class="line">            <span class="attr">android:format12Hour</span>=<span class="string">"h"</span></div><div class="line">            <span class="attr">android:format24Hour</span>=<span class="string">"HH"</span>/&gt;</div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">TextClock</span></span></div><div class="line">            <span class="attr">android:id</span>=<span class="string">"@+id/main_date1"</span></div><div class="line">            <span class="attr">style</span>=<span class="string">"@style/MainDateStyle"</span></div><div class="line">            <span class="attr">android:layout_width</span>=<span class="string">"@dimen/main_date_width"</span></div><div class="line">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">            <span class="attr">android:layout_marginStart</span>=<span class="string">"55dip"</span></div><div class="line">            <span class="attr">android:layout_marginTop</span>=<span class="string">"40dp"</span></div><div class="line">            <span class="attr">android:format12Hour</span>=<span class="string">"mm"</span></div><div class="line">            <span class="attr">android:format24Hour</span>=<span class="string">"mm"</span>/&gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">TextClock</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/main_time"</span></div><div class="line">        <span class="attr">style</span>=<span class="string">"@style/MainTimeStyle"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_alignParentBottom</span>=<span class="string">"true"</span></div><div class="line">        <span class="attr">android:layout_centerHorizontal</span>=<span class="string">"true"</span></div><div class="line">        <span class="attr">android:paddingBottom</span>=<span class="string">"30dp"</span></div><div class="line">        <span class="attr">android:format12Hour</span>=<span class="string">"@string/main_time_format"</span></div><div class="line">        <span class="attr">android:format24Hour</span>=<span class="string">"@string/main_time_format"</span>/&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<p> TextClock使用很简单，主要就是设置他的<code>android:format12Hour</code> 和<code>android:format24Hour</code> 属性。那么问题来了，改怎么设置呢？可以先参考Android开发文档中的<a href="https://developer.android.google.cn/reference/java/text/SimpleDateFormat.html" target="_blank" rel="external">SimpleDateFormat</a> ，其中列出了已经定义的字母代表的含义，并且也指明了可以通过加上<code>&#39;&#39;</code> 单引号来避免被替换。比如我需要“ 2017X4X6”这样的日期格式，那么可以这样定义:<code>yyyy&#39;X&#39;M&#39;X&#39;d</code> ，或许你看了SimpleDateFromat文档后，你也会这样定义成<code>YYYY&#39;X&#39;M&#39;X&#39;d</code> ，但是你会发现你得到的结果是这样的：YYYYX4X6，为什么呢，稍后我们从源码的角度来解答。</p>
+<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><h3 id="1，时间更新机制"><a href="#1，时间更新机制" class="headerlink" title="1，时间更新机制"></a>1，时间更新机制</h3><p> TextClock是继承自TextView，TextClock有四个构造方法，在布局文件中使用TextClock时，最终都会调用<code>public TextClock(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)</code> 这个构造方法，所以我们从该构造方法入手，分析TextClock的原理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">TextClock</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr, <span class="keyword">int</span> defStyleRes)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs, defStyleAttr, defStyleRes);</div><div class="line"></div><div class="line">    <span class="keyword">final</span> TypedArray a = context.obtainStyledAttributes(</div><div class="line">            attrs, R.styleable.TextClock, defStyleAttr, defStyleRes);</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        <span class="comment">//获取xml中定义的12小时制、24小时制、时区的格式</span></div><div class="line">        mFormat12 = a.getText(R.styleable.TextClock_format12Hour);</div><div class="line">        mFormat24 = a.getText(R.styleable.TextClock_format24Hour);</div><div class="line">        mTimeZone = a.getString(R.styleable.TextClock_timeZone);</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        a.recycle();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    init();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> 在上面的构造方法中调用了init()方法，该方法先会确保12小时和24小时制的格式有正确的值，然后会创建Calendar对象mTimer，该对象就是正真的时间，所定义的format都是操作mTimer，然后得到相应格式的时间、日期。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">//如果在xml中没有定义12小时制或者24小时制的格式就取系统的时间格式</span></div><div class="line">    <span class="keyword">if</span> (mFormat12 == <span class="keyword">null</span> || mFormat24 == <span class="keyword">null</span>) &#123;</div><div class="line">        LocaleData ld = LocaleData.get(getContext().getResources().getConfiguration().locale);</div><div class="line">        <span class="keyword">if</span> (mFormat12 == <span class="keyword">null</span>) &#123;</div><div class="line">            mFormat12 = ld.timeFormat12;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (mFormat24 == <span class="keyword">null</span>) &#123;</div><div class="line">            mFormat24 = ld.timeFormat24;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//创建Calender对象mTimer</span></div><div class="line">    createTime(mTimeZone);</div><div class="line">    <span class="comment">// Wait until onAttachedToWindow() to handle the ticker</span></div><div class="line">    chooseFormat(<span class="keyword">false</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> createTime()方法比较简单，我们直接看chooseFormat()方法,该方法会先确定时间日期格式,是12小时制还是24小时制，我们这里为了方便，将这确定的格式称为<strong>确定的格式</strong>，然后根据确定的格式判断要不要开始每秒更新时间显示。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Selects either one of &#123;<span class="doctag">@link</span> #getFormat12Hour()&#125; or &#123;<span class="doctag">@link</span> #getFormat24Hour()&#125;</div><div class="line"> * depending on whether the user has selected 24-hour format.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@param</span> handleTicker true if calling this method should schedule/unschedule the</div><div class="line"> *                     time ticker, false otherwise</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">chooseFormat</span><span class="params">(<span class="keyword">boolean</span> handleTicker)</span> </span>&#123;</div><div class="line">    <span class="comment">//根据系统设置判断是否是24小时制</span></div><div class="line">    <span class="keyword">final</span> <span class="keyword">boolean</span> format24Requested = is24HourModeEnabled();</div><div class="line">    <span class="comment">//LoacalData是支持ICU的类，主要是为了支持国际化</span></div><div class="line">    LocaleData ld = LocaleData.get(getContext().getResources().getConfiguration().locale);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (format24Requested) &#123;</div><div class="line">		<span class="comment">//abc(CharSequence a, CharSequence b, CharSequence c),是判断a是否为null，不为null就返回a的值，</span></div><div class="line">		<span class="comment">//如果a为null,则继续判断b是否为null,以此类推下去</span></div><div class="line">        mFormat = abc(mFormat24, mFormat12, ld.timeFormat24);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        mFormat = abc(mFormat12, mFormat24, ld.timeFormat12);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//hadSeconds 记录之前的值</span></div><div class="line">    <span class="keyword">boolean</span> hadSeconds = mHasSeconds;</div><div class="line">	<span class="comment">//判断当前格式中是否包含秒</span></div><div class="line">    mHasSeconds = DateFormat.hasSeconds(mFormat);</div><div class="line">    <span class="comment">//handleTicker参数、onAttachedToWindow()是否被调用，mHaseSeconds值是否有改变，</span></div><div class="line">    <span class="comment">//当三个参数都为true时，才会根据mHaseSeconds之前的状态，来判断是否需要每秒更新时间</span></div><div class="line">    <span class="keyword">if</span> (handleTicker &amp;&amp; mAttached &amp;&amp; hadSeconds != mHasSeconds) &#123;</div><div class="line">        <span class="keyword">if</span> (hadSeconds) getHandler().removeCallbacks(mTicker);</div><div class="line">        <span class="keyword">else</span> mTicker.run();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们可以看下mTicker变量的初始化，mTicker 是个一个实现了Runnale接口的匿名内部类对象。mTicker就是用于每秒更新时间的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> Runnable mTicker = <span class="keyword">new</span> Runnable() &#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//更新时间</span></div><div class="line">        onTimeChanged();</div><div class="line"></div><div class="line">        <span class="keyword">long</span> now = SystemClock.uptimeMillis();</div><div class="line">        <span class="keyword">long</span> next = now + (<span class="number">1000</span> - now % <span class="number">1000</span>);<span class="comment">//下一个整数秒再次更新时间</span></div><div class="line"></div><div class="line">        getHandler().postAtTime(mTicker, next);<span class="comment">//通过Handler自发自收消息</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">//更新时间显示</span></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">onTimeChanged</span><span class="params">()</span> </span>&#123;</div><div class="line">    mTime.setTimeInMillis(System.currentTimeMillis());</div><div class="line">    setText(DateFormat.format(mFormat, mTime));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>有哪些地方会去启动这一个更新时间的任务，也就是调用mTicker.run()呢。在上面提到的chooseFormat(boolean handleTicker)中会调用，另一处是在onAttachedToWindow()方法中也会调用。我们看下onAttachedToWindow（）的内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onAttachedToWindow</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onAttachedToWindow();</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (!mAttached) &#123;</div><div class="line">        mAttached = <span class="keyword">true</span>;</div><div class="line"></div><div class="line">        registerReceiver(); <span class="comment">//注册广播</span></div><div class="line">        registerObserver(); <span class="comment">//注册ContentObserver，监听SettingProvider中时间日期格式等的改变</span></div><div class="line"></div><div class="line">        createTime(mTimeZone);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (mHasSeconds) &#123; <span class="comment">//判断确定的格式中是否包含秒</span></div><div class="line">            mTicker.run();</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            onTimeChanged();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> 我们可以看到，在onAttachedToWindow()方法中，会根据确定的格式中是否包含秒，如果包含就开始每秒更新一次时间日期显示。或许你我提出个问题，上面我们一直提到，确定的格式中包含秒时，才会每秒去更新时间日期显示，如果不包含，那时间怎么更新呢？难道就不能更新了？我们看看registerReceiver()方法以及注册的广播。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">registerReceiver</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> IntentFilter filter = <span class="keyword">new</span> IntentFilter();</div><div class="line">    <span class="comment">//ACTION_TIME_TICK是系统每分钟发出，通过这个广播实现了在没调用mTicker.run()方法时仍能更新时间</span></div><div class="line">    filter.addAction(Intent.ACTION_TIME_TICK);</div><div class="line">    filter.addAction(Intent.ACTION_TIME_CHANGED);</div><div class="line">    filter.addAction(Intent.ACTION_TIMEZONE_CHANGED);</div><div class="line"></div><div class="line">    getContext().registerReceiver(mIntentReceiver, filter, <span class="keyword">null</span>, getHandler());</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> BroadcastReceiver mIntentReceiver = <span class="keyword">new</span> BroadcastReceiver() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mTimeZone == <span class="keyword">null</span> &amp;&amp; Intent.ACTION_TIMEZONE_CHANGED.equals(intent.getAction())) &#123;</div><div class="line">            <span class="keyword">final</span> String timeZone = intent.getStringExtra(<span class="string">"time-zone"</span>);</div><div class="line">            createTime(timeZone);</div><div class="line">        &#125;</div><div class="line">        onTimeChanged();</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="comment">/**</span></div><div class="line">* 更新时间</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">onTimeChanged</span><span class="params">()</span> </span>&#123;</div><div class="line">    mTime.setTimeInMillis(System.currentTimeMillis());</div><div class="line">    setText(DateFormat.format(mFormat, mTime));</div><div class="line">    setContentDescription(DateFormat.format(mDescFormat, mTime));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> 最后，我们通过一张流程图来总结下：</p>
+<p><img src="http://note.youdao.com/yws/public/resource/5829bf99d392b3520cd5d3988fe14eeb/xmlnote/5528D3E4C8054A91958380D1E05950E7/12137" alt="image"></p>
+<h3 id="2，格式匹配方式"><a href="#2，格式匹配方式" class="headerlink" title="2，格式匹配方式"></a>2，格式匹配方式</h3><p> 在了解时间日期更新机制之后，我们看下当设置时间或者日期格式后，为什么就能够返回我们想要的格式？为什么在上一节，我们最后提到的设置格式<code>YYYY&#39;X&#39;M&#39;X&#39;d</code> 不能返回我们期望的日期格式。再看下onTimeChange()方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">onTimeChanged</span><span class="params">()</span> </span>&#123;</div><div class="line">    mTime.setTimeInMillis(System.currentTimeMillis());</div><div class="line">    setText(DateFormat.format(mFormat, mTime));</div><div class="line">    setContentDescription(DateFormat.format(mDescFormat, mTime));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>更新时间显示是通过调用了<code>setText(DateFormat.format(mFormat, mTime));</code> 方法，那么就可以继续看DateFormat.format()具体的实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">/**</span></div><div class="line"> * Given a format string and a &#123;<span class="doctag">@link</span> java.util.Calendar&#125; object, returns a CharSequence</div><div class="line"> * containing the requested date.</div><div class="line"> * <span class="doctag">@param</span> inFormat the format string, as described in &#123;<span class="doctag">@link</span> android.text.format.DateFormat&#125;</div><div class="line"> * <span class="doctag">@param</span> inDate the date to format</div><div class="line"> * <span class="doctag">@return</span> a &#123;<span class="doctag">@link</span> CharSequence&#125; containing the requested text</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> CharSequence <span class="title">format</span><span class="params">(CharSequence inFormat, Calendar inDate)</span> </span>&#123;</div><div class="line">    SpannableStringBuilder s = <span class="keyword">new</span> SpannableStringBuilder(inFormat);<span class="comment">//将inFormat转化可变的字符串</span></div><div class="line">    <span class="keyword">int</span> count;</div><div class="line"></div><div class="line">    LocaleData localeData = LocaleData.get(Locale.getDefault());</div><div class="line"></div><div class="line">    <span class="keyword">int</span> len = inFormat.length();</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i += count) &#123;</div><div class="line">        count = <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> c = s.charAt(i);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (c == QUOTE) &#123;</div><div class="line">            count = appendQuotedText(s, i, len);</div><div class="line">            len = s.length();</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> ((i + count &lt; len) &amp;&amp; (s.charAt(i + count) == c)) &#123;</div><div class="line">            count++;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//replacement就是要替换inFormat中的时间日期的内容；比如inFormat是：“mm:ss”,当前时间是12分23秒</span></div><div class="line">		<span class="comment">//如果c为第一个“m”,那么replacement 就是“1”，</span></div><div class="line">        String replacement;</div><div class="line">        <span class="keyword">switch</span> (c) &#123;</div><div class="line">            <span class="keyword">case</span> <span class="string">'A'</span>:   <span class="comment">// 24小时制中的上午或者下午标志</span></div><div class="line">            <span class="keyword">case</span> <span class="string">'a'</span>:</div><div class="line">                replacement = localeData.amPm[inDate.get(Calendar.AM_PM) - Calendar.AM];</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'d'</span>:  <span class="comment">// 一个月中第几天</span></div><div class="line">                replacement = zeroPad(inDate.get(Calendar.DATE), count);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'c'</span>: <span class="comment">// 星期几</span></div><div class="line">            <span class="keyword">case</span> <span class="string">'E'</span>:</div><div class="line">                replacement = getDayOfWeekString(localeData,</div><div class="line">                                                 inDate.get(Calendar.DAY_OF_WEEK), count, c);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'K'</span>: <span class="comment">// hour in am/pm (0-11)  </span></div><div class="line">            <span class="keyword">case</span> <span class="string">'h'</span>: <span class="comment">// hour in am/pm (1-12)</span></div><div class="line">                &#123;</div><div class="line">                    <span class="keyword">int</span> hour = inDate.get(Calendar.HOUR);</div><div class="line">                    <span class="keyword">if</span> (c == <span class="string">'h'</span> &amp;&amp; hour == <span class="number">0</span>) &#123;</div><div class="line">                        hour = <span class="number">12</span>;</div><div class="line">                    &#125;</div><div class="line">                    replacement = zeroPad(hour, count);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'H'</span>: <span class="comment">// hour in day (0-23)</span></div><div class="line">            <span class="keyword">case</span> <span class="string">'k'</span>: <span class="comment">// hour in day (1-24) [but see note below]</span></div><div class="line">                &#123;</div><div class="line">                    <span class="keyword">int</span> hour = inDate.get(Calendar.HOUR_OF_DAY);</div><div class="line">                    <span class="comment">// Historically on Android 'k' was interpreted as 'H', which wasn't</span></div><div class="line">                    <span class="comment">// implemented, so pretty much all callers that want to format 24-hour</span></div><div class="line">                    <span class="comment">// times are abusing 'k'. http://b/8359981.</span></div><div class="line">                    <span class="keyword">if</span> (<span class="keyword">false</span> &amp;&amp; c == <span class="string">'k'</span> &amp;&amp; hour == <span class="number">0</span>) &#123;</div><div class="line">                        hour = <span class="number">24</span>;</div><div class="line">                    &#125;</div><div class="line">                    replacement = zeroPad(hour, count);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'L'</span>: <span class="comment">//一年中的月份</span></div><div class="line">            <span class="keyword">case</span> <span class="string">'M'</span>:</div><div class="line">                replacement = getMonthString(localeData,</div><div class="line">                                             inDate.get(Calendar.MONTH), count, c);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'m'</span>: <span class="comment">//一小时中的第几分钟</span></div><div class="line">                replacement = zeroPad(inDate.get(Calendar.MINUTE), count);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'s'</span>: <span class="comment">//一分钟第几秒</span></div><div class="line">                replacement = zeroPad(inDate.get(Calendar.SECOND), count);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'y'</span>: <span class="comment">//年份</span></div><div class="line">                replacement = getYearString(inDate.get(Calendar.YEAR), count);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'z'</span>: <span class="comment">//时区</span></div><div class="line">                replacement = getTimeZoneString(inDate, count);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                replacement = <span class="keyword">null</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (replacement != <span class="keyword">null</span>) &#123;</div><div class="line">            s.replace(i, i + count, replacement); <span class="comment">//替换时间日期格式中对应的字符（即上面case 语句中的字符）</span></div><div class="line">            count = replacement.length(); <span class="comment">// CARE: count is used in the for loop above</span></div><div class="line">            len = s.length();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (inFormat <span class="keyword">instanceof</span> Spanned) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SpannedString(s);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> s.toString();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过这个方法，我们会发现该方法里面定义的格式的字符和<a href="https://developer.android.google.cn/reference/java/text/SimpleDateFormat.html" target="_blank" rel="external">SimpleDateFormat</a> 中列举的是有出入的，这也解释了在使用的章节里面，最后的一个问题：为什么<code>YYYY&#39;X&#39;M&#39;X&#39;d</code> 不能得到我们期望的日期。因为在DateFormat.format()方法中的case语句中根本没有格式”Y” 啊！   <strong>所以当我们在定义TextClock的format时最好的方式就是参考DateFormat.format()方法，看看它支持哪些格式</strong></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/TextClock/" rel="tag"># TextClock</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/02/深入理解static关键字/" rel="next" title="深入理解Java static关键字">
+                <i class="fa fa-chevron-left"></i> 深入理解Java static关键字
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="shymanzhu" />
+          <p class="site-author-name" itemprop="name">shymanzhu</p>
+           
+              <p class="site-description motion-element" itemprop="description">Android,Java</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android-TextClock-使用及源码解析"><span class="nav-number">1.</span> <span class="nav-text">Android TextClock 使用及源码解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">1.1.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1，时间"><span class="nav-number">1.1.1.</span> <span class="nav-text">1，时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2，日期"><span class="nav-number">1.1.2.</span> <span class="nav-text">2，日期</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码分析"><span class="nav-number">1.2.</span> <span class="nav-text">源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1，时间更新机制"><span class="nav-number">1.2.1.</span> <span class="nav-text">1，时间更新机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2，格式匹配方式"><span class="nav-number">1.2.2.</span> <span class="nav-text">2，格式匹配方式</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">shymanzhu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
