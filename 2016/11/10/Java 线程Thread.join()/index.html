@@ -87,30 +87,30 @@
 
 
 
-<meta name="description" content="Thread.join()的含义及用法理解join()方法的含义，我们借助图形来理解，有下面的场景：
+<meta name="description" content="理解join()方法的含义，我们借助图形来理解，有下面的场景：
 
   ThreadA启动ThreadB,然后调用ThredB.join()方法，这个时候，ThreadA会被阻塞，直到ThreadB运行结束，ThreadA才继续往下执行。
   看下面的例子，一目了然。
-12345678910111213141516171819202122232425262728">
+123456789101112131415161718192021222324252627282930313233package c">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Thread.join()的含义及用法">
 <meta property="og:url" content="http://yoursite.com/2016/11/10/Java 线程Thread.join()/index.html">
 <meta property="og:site_name" content="Blog of shymanzhu">
-<meta property="og:description" content="Thread.join()的含义及用法理解join()方法的含义，我们借助图形来理解，有下面的场景：
+<meta property="og:description" content="理解join()方法的含义，我们借助图形来理解，有下面的场景：
 
   ThreadA启动ThreadB,然后调用ThredB.join()方法，这个时候，ThreadA会被阻塞，直到ThreadB运行结束，ThreadA才继续往下执行。
   看下面的例子，一目了然。
-12345678910111213141516171819202122232425262728">
-<meta property="og:image" content="http://note.youdao.com/yws/public/resource/1a689ece1f7310e32c9d96900a304976/xmlnote/F892E3AD63E6436BBB667CA069B41B20/12031">
-<meta property="og:updated_time" content="2017-05-03T15:12:38.000Z">
+123456789101112131415161718192021222324252627282930313233package c">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/thread_join/thread_join.png">
+<meta property="og:updated_time" content="2017-05-20T14:01:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Thread.join()的含义及用法">
-<meta name="twitter:description" content="Thread.join()的含义及用法理解join()方法的含义，我们借助图形来理解，有下面的场景：
+<meta name="twitter:description" content="理解join()方法的含义，我们借助图形来理解，有下面的场景：
 
   ThreadA启动ThreadB,然后调用ThredB.join()方法，这个时候，ThreadA会被阻塞，直到ThreadB运行结束，ThreadA才继续往下执行。
   看下面的例子，一目了然。
-12345678910111213141516171819202122232425262728">
-<meta name="twitter:image" content="http://note.youdao.com/yws/public/resource/1a689ece1f7310e32c9d96900a304976/xmlnote/F892E3AD63E6436BBB667CA069B41B20/12031">
+123456789101112131415161718192021222324252627282930313233package c">
+<meta name="twitter:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/thread_join/thread_join.png">
 
 
 
@@ -335,8 +335,8 @@
       
 
       
-        <h2 id="Thread-join-的含义及用法"><a href="#Thread-join-的含义及用法" class="headerlink" title="Thread.join()的含义及用法"></a>Thread.join()的含义及用法</h2><p>理解join()方法的含义，我们借助图形来理解，有下面的场景：</p>
-<p><img src="http://note.youdao.com/yws/public/resource/1a689ece1f7310e32c9d96900a304976/xmlnote/F892E3AD63E6436BBB667CA069B41B20/12031" alt="image"></p>
+        <p>理解join()方法的含义，我们借助图形来理解，有下面的场景：</p>
+<p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/thread_join/thread_join.png" alt="image"></p>
 <p>  ThreadA启动ThreadB,然后调用ThredB.join()方法，这个时候，ThreadA会被阻塞，直到ThreadB运行结束，ThreadA才继续往下执行。</p>
 <p>  看下面的例子，一目了然。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.zhuzp.test.concurrence;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JoinLearn</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * <span class="doctag">@param</span> args</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"></div><div class="line">		joinThread();</div><div class="line">		runInMain();</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">joinThread</span><span class="params">()</span></span>&#123;</div><div class="line">		Thread t = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">			</div><div class="line">			<span class="meta">@Override</span></div><div class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</div><div class="line">					System.out.println(<span class="string">"i: "</span> + i);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">		t.start();</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">runInMain</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</div><div class="line">			System.out.println(<span class="string">"runInMain: "</span> + i);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -446,17 +446,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -509,22 +500,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Thread-join-的含义及用法"><span class="nav-number">1.</span> <span class="nav-text">Thread.join()的含义及用法</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

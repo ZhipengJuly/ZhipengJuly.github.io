@@ -87,37 +87,34 @@
 
 
 
-<meta name="description" content="Android TextClock 使用及源码解析
-TextClock 是Android用于显示当前时间或者日期的控件，并且支持用户自定义的日期或者时间格式。
+<meta name="description" content="TextClock 是Android用于显示当前时间或者日期的控件，并且支持用户自定义的日期或者时间格式。
 
 使用 比如我们要做一个下面效果图的界面，这里我们就可以使用TextClock来实现。
 
 1，时间 上面效果图中的时间，我们该怎么做呢，我们可以用一个TextClock实现
-12345678&amp;lt;TextClock    android:">
+12345678&amp;lt;TextClock    android:id=&quot;@+id/main_date&quot;    st">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android TextClock 使用及源码解析">
 <meta property="og:url" content="http://yoursite.com/2017/05/13/Android TextClock 使用及源码解析/index.html">
 <meta property="og:site_name" content="Blog of shymanzhu">
-<meta property="og:description" content="Android TextClock 使用及源码解析
-TextClock 是Android用于显示当前时间或者日期的控件，并且支持用户自定义的日期或者时间格式。
+<meta property="og:description" content="TextClock 是Android用于显示当前时间或者日期的控件，并且支持用户自定义的日期或者时间格式。
 
 使用 比如我们要做一个下面效果图的界面，这里我们就可以使用TextClock来实现。
 
 1，时间 上面效果图中的时间，我们该怎么做呢，我们可以用一个TextClock实现
-12345678&amp;lt;TextClock    android:">
-<meta property="og:image" content="http://note.youdao.com/yws/public/resource/5829bf99d392b3520cd5d3988fe14eeb/xmlnote/C0C15704DBF44375AE98C72028D69AFC/12074">
-<meta property="og:image" content="http://note.youdao.com/yws/public/resource/5829bf99d392b3520cd5d3988fe14eeb/xmlnote/5528D3E4C8054A91958380D1E05950E7/12137">
-<meta property="og:updated_time" content="2017-05-12T15:55:49.000Z">
+12345678&amp;lt;TextClock    android:id=&quot;@+id/main_date&quot;    st">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/text_clock/text_clock_render.png">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/text_clock/textclokc_flow_chart.png">
+<meta property="og:updated_time" content="2017-05-20T13:58:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android TextClock 使用及源码解析">
-<meta name="twitter:description" content="Android TextClock 使用及源码解析
-TextClock 是Android用于显示当前时间或者日期的控件，并且支持用户自定义的日期或者时间格式。
+<meta name="twitter:description" content="TextClock 是Android用于显示当前时间或者日期的控件，并且支持用户自定义的日期或者时间格式。
 
 使用 比如我们要做一个下面效果图的界面，这里我们就可以使用TextClock来实现。
 
 1，时间 上面效果图中的时间，我们该怎么做呢，我们可以用一个TextClock实现
-12345678&amp;lt;TextClock    android:">
-<meta name="twitter:image" content="http://note.youdao.com/yws/public/resource/5829bf99d392b3520cd5d3988fe14eeb/xmlnote/C0C15704DBF44375AE98C72028D69AFC/12074">
+12345678&amp;lt;TextClock    android:id=&quot;@+id/main_date&quot;    st">
+<meta name="twitter:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/text_clock/text_clock_render.png">
 
 
 
@@ -342,11 +339,11 @@ TextClock 是Android用于显示当前时间或者日期的控件，并且支持
       
 
       
-        <h1 id="Android-TextClock-使用及源码解析"><a href="#Android-TextClock-使用及源码解析" class="headerlink" title="Android TextClock 使用及源码解析"></a>Android TextClock 使用及源码解析</h1><blockquote>
+        <blockquote>
 <p>TextClock 是Android用于显示当前时间或者日期的控件，并且支持用户自定义的日期或者时间格式。</p>
 </blockquote>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p> 比如我们要做一个下面效果图的界面，这里我们就可以使用TextClock来实现。</p>
-<p><img src="http://note.youdao.com/yws/public/resource/5829bf99d392b3520cd5d3988fe14eeb/xmlnote/C0C15704DBF44375AE98C72028D69AFC/12074" alt="iamge"></p>
+<p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/text_clock/text_clock_render.png" alt="iamge"></p>
 <h3 id="1，时间"><a href="#1，时间" class="headerlink" title="1，时间"></a>1，时间</h3><p> 上面效果图中的时间，我们该怎么做呢，我们可以用一个TextClock实现</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">TextClock</span></span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/main_date"</span></div><div class="line">    <span class="attr">style</span>=<span class="string">"@style/MainDateStyle"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"@dimen/main_date_width"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:layout_marginTop</span>=<span class="string">"50dp"</span></div><div class="line">    <span class="attr">android:format12Hour</span>=<span class="string">"@string/main_date_format12"</span></div><div class="line">    <span class="attr">android:format24Hour</span>=<span class="string">"@string/main_date_format24"</span>/&gt;</div></pre></td></tr></table></figure>
 <p>其中<code>android:format12Hour</code> 表示12小时制格式，<code>android:format24Hour</code> 表示24小时制格式，对应的string资源是：</p>
@@ -373,7 +370,7 @@ TextClock 是Android用于显示当前时间或者日期的控件，并且支持
 <p> 我们可以看到，在onAttachedToWindow()方法中，会根据确定的格式中是否包含秒，如果包含就开始每秒更新一次时间日期显示。或许你我提出个问题，上面我们一直提到，确定的格式中包含秒时，才会每秒去更新时间日期显示，如果不包含，那时间怎么更新呢？难道就不能更新了？我们看看registerReceiver()方法以及注册的广播。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">registerReceiver</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> IntentFilter filter = <span class="keyword">new</span> IntentFilter();</div><div class="line">    <span class="comment">//ACTION_TIME_TICK是系统每分钟发出，通过这个广播实现了在没调用mTicker.run()方法时仍能更新时间</span></div><div class="line">    filter.addAction(Intent.ACTION_TIME_TICK);</div><div class="line">    filter.addAction(Intent.ACTION_TIME_CHANGED);</div><div class="line">    filter.addAction(Intent.ACTION_TIMEZONE_CHANGED);</div><div class="line"></div><div class="line">    getContext().registerReceiver(mIntentReceiver, filter, <span class="keyword">null</span>, getHandler());</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> BroadcastReceiver mIntentReceiver = <span class="keyword">new</span> BroadcastReceiver() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mTimeZone == <span class="keyword">null</span> &amp;&amp; Intent.ACTION_TIMEZONE_CHANGED.equals(intent.getAction())) &#123;</div><div class="line">            <span class="keyword">final</span> String timeZone = intent.getStringExtra(<span class="string">"time-zone"</span>);</div><div class="line">            createTime(timeZone);</div><div class="line">        &#125;</div><div class="line">        onTimeChanged();</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="comment">/**</span></div><div class="line">* 更新时间</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">onTimeChanged</span><span class="params">()</span> </span>&#123;</div><div class="line">    mTime.setTimeInMillis(System.currentTimeMillis());</div><div class="line">    setText(DateFormat.format(mFormat, mTime));</div><div class="line">    setContentDescription(DateFormat.format(mDescFormat, mTime));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p> 最后，我们通过一张流程图来总结下：</p>
-<p><img src="http://note.youdao.com/yws/public/resource/5829bf99d392b3520cd5d3988fe14eeb/xmlnote/5528D3E4C8054A91958380D1E05950E7/12137" alt="image"></p>
+<p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/text_clock/textclokc_flow_chart.png" alt="image"></p>
 <h3 id="2，格式匹配方式"><a href="#2，格式匹配方式" class="headerlink" title="2，格式匹配方式"></a>2，格式匹配方式</h3><p> 在了解时间日期更新机制之后，我们看下当设置时间或者日期格式后，为什么就能够返回我们想要的格式？为什么在上一节，我们最后提到的设置格式<code>YYYY&#39;X&#39;M&#39;X&#39;d</code> 不能返回我们期望的日期格式。再看下onTimeChange()方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">onTimeChanged</span><span class="params">()</span> </span>&#123;</div><div class="line">    mTime.setTimeInMillis(System.currentTimeMillis());</div><div class="line">    setText(DateFormat.format(mFormat, mTime));</div><div class="line">    setContentDescription(DateFormat.format(mDescFormat, mTime));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>更新时间显示是通过调用了<code>setText(DateFormat.format(mFormat, mTime));</code> 方法，那么就可以继续看DateFormat.format()具体的实现：</p>
@@ -551,7 +548,7 @@ TextClock 是Android用于显示当前时间或者日期的控件，并且支持
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android-TextClock-使用及源码解析"><span class="nav-number">1.</span> <span class="nav-text">Android TextClock 使用及源码解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">1.1.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1，时间"><span class="nav-number">1.1.1.</span> <span class="nav-text">1，时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2，日期"><span class="nav-number">1.1.2.</span> <span class="nav-text">2，日期</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码分析"><span class="nav-number">1.2.</span> <span class="nav-text">源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1，时间更新机制"><span class="nav-number">1.2.1.</span> <span class="nav-text">1，时间更新机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2，格式匹配方式"><span class="nav-number">1.2.2.</span> <span class="nav-text">2，格式匹配方式</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">1.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1，时间"><span class="nav-number">1.1.</span> <span class="nav-text">1，时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2，日期"><span class="nav-number">1.2.</span> <span class="nav-text">2，日期</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码分析"><span class="nav-number">2.</span> <span class="nav-text">源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1，时间更新机制"><span class="nav-number">2.1.</span> <span class="nav-text">1，时间更新机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2，格式匹配方式"><span class="nav-number">2.2.</span> <span class="nav-text">2，格式匹配方式</span></a></li></ol></li></ol></div>
             
 
           </div>
