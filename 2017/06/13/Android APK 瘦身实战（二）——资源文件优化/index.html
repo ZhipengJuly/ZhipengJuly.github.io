@@ -1,0 +1,746 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,APK 瘦身," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="在前一篇文章——Android APK瘦身实战（一）APK分析中，我们可以知道自己APK的大小构成，在知道APK的大小构成后，我们就可以针对特定的部分瘦身了。
+
+删除无用资源  在APK中，资源文件占用了很大的比重，所以在APK瘦身的时候，首先可以考虑优化，资源文件，删除无用的音视频、图片资源。借助于Android Studio的分析工具，我们可以很方便找到未使用的资源文件。
+ Analyze&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android APK瘦身实战（二）——资源文件优化">
+<meta property="og:url" content="http://yoursite.com/2017/06/13/Android APK 瘦身实战（二）——资源文件优化/index.html">
+<meta property="og:site_name" content="ShymanZhu’s blog">
+<meta property="og:description" content="在前一篇文章——Android APK瘦身实战（一）APK分析中，我们可以知道自己APK的大小构成，在知道APK的大小构成后，我们就可以针对特定的部分瘦身了。
+
+删除无用资源  在APK中，资源文件占用了很大的比重，所以在APK瘦身的时候，首先可以考虑优化，资源文件，删除无用的音视频、图片资源。借助于Android Studio的分析工具，我们可以很方便找到未使用的资源文件。
+ Analyze&amp;">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/inspection_choose.png">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/inspection_scpoe.png">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/inspection_result.png">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/remove_all_unused_resources.png">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/inspection_unused_declaration.png">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/convert_web_device.png">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/convert_web_compare.png">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/chanel_alpha.png">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/convert_to_webp.png">
+<meta property="og:updated_time" content="2017-06-12T13:33:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android APK瘦身实战（二）——资源文件优化">
+<meta name="twitter:description" content="在前一篇文章——Android APK瘦身实战（一）APK分析中，我们可以知道自己APK的大小构成，在知道APK的大小构成后，我们就可以针对特定的部分瘦身了。
+
+删除无用资源  在APK中，资源文件占用了很大的比重，所以在APK瘦身的时候，首先可以考虑优化，资源文件，删除无用的音视频、图片资源。借助于Android Studio的分析工具，我们可以很方便找到未使用的资源文件。
+ Analyze&amp;">
+<meta name="twitter:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/inspection_choose.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/13/Android APK 瘦身实战（二）——资源文件优化/"/>
+
+
+
+
+
+  <title> Android APK瘦身实战（二）——资源文件优化 | ShymanZhu’s blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ShymanZhu’s blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/13/Android APK 瘦身实战（二）——资源文件优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ShymanZhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/shymanzhu.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShymanZhu’s blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android APK瘦身实战（二）——资源文件优化
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-12T21:29:30Z">
+                2017-06-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>在前一篇文章——<a href="http://shymanzhu.com/2017/05/21/Android%20APK%20%E7%98%A6%E8%BA%AB%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94APK%E5%88%86%E6%9E%90/" target="_blank" rel="external">Android APK瘦身实战（一）APK分析</a>中，我们可以知道自己APK的大小构成，在知道APK的大小构成后，我们就可以针对特定的部分瘦身了。</p>
+</blockquote>
+<h2 id="删除无用资源"><a href="#删除无用资源" class="headerlink" title="删除无用资源"></a>删除无用资源</h2><p>  在APK中，资源文件占用了很大的比重，所以在APK瘦身的时候，首先可以考虑优化，资源文件，删除无用的音视频、图片资源。借助于Android Studio的分析工具，我们可以很方便找到未使用的资源文件。</p>
+<p> Analyze&gt;Run Inspection by name(Windows下也可以调用快捷键：Ctrl + Shift + Alt + I)，然后输入 unused resource</p>
+<p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/inspection_choose.png" alt=""></p>
+<p>选择你的project或者module</p>
+<p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/inspection_scpoe.png" alt=""></p>
+<p>然后在Inspection Results中会看到有哪些无用的资源，比如我们作坊的一个项目inspection结果如下：</p>
+<p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/inspection_result.png" alt=""></p>
+<p>在这里你可以发现有哪些是无用的资源，保险起见，你可以一个个查看，然后删除这些无用资源。当然，咱们也可以一次性全部删掉，反正咱们不是有Git 吗，那么选中你的module，右键Refactor &gt;  Remove Unused Resources ，然后选择Refactor。</p>
+<p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/remove_all_unused_resources.png" alt=""></p>
+<p>完了之后，再次检测时会发现已经没有了未使用的资源文件，但是这个还没有结束，因为还有可能有些未使用的类中引用了资源文件，这个时候，再次检查未使用的声明，</p>
+<p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/inspection_unused_declaration.png" alt=""></p>
+<p>这里比较麻烦，需要一个个的去找未使用的类，然后根据具体情况判断是否要删掉他们，删掉后再检查未使用的资源文件。Stack Overflow上面一个关于只检查未使用的类的<a href="https://stackoverflow.com/a/38244028/7234029" target="_blank" rel="external">方法</a>,但是并不凑效。</p>
+<h2 id="图片优化"><a href="#图片优化" class="headerlink" title="图片优化"></a>图片优化</h2><p>&emsp; 图片优化是APK瘦身效果最明显的地方，毕竟每个应用中都有不少的图片。图片优化我们可以从以下几个方面来进行：</p>
+<h3 id="如何选择图片"><a href="#如何选择图片" class="headerlink" title="如何选择图片"></a>如何选择图片</h3><p>  首先要吐槽下我作坊的UI，每次切图过来，所有的图都是32位深的，然后我就问了，为什么都是32位的，他说不知道。选择位深度的依据是啥，也是同样不知道。敢情切图都是随意蒙的啊，甚至曾静给我一张3M多的48位的背景图（虽然在编译成APK时，studio会将它压缩为24位的图），真想把他拉去打靶。。。。不知道也可以查查嘛，再不济也大概可以看看其他大厂的切图是怎样的，然后基本确定下位深度的选择吧。</p>
+<ul>
+<li><p>png 8 ，支持256种颜色的索引值表示。png8适合那些颜色比较单一的图像，比如纯色。png8是使用索引值来表示颜色的，并不是采用RGB值来表示，用一个比较直观的例子说明什么是使用索引表示颜色。</p>
+<p>有一张32位深的图，使用PS转化成web和设备所用格式（快捷键：Alt + Ctrl + Shift + S）</p>
+<p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/convert_web_device.png" alt=""></p>
+<p>1，选择png8，选透明度是指是否透明，不勾选的话就是不透明。</p>
+<p>2，鼠标放在绿色区域，</p>
+<p>3，然后可以看到该区域的alpha值和16进制颜色值，以及索引。alpha 255表示不透明，索引 1表示鼠标选中的区域的颜色在这张图中所有颜色中的索引。将鼠标放在不同的区域，这些值会变化；从图中可以看出，包括透明区域，有三种颜色，所以索引值有：0、1、2三种。</p>
+</li>
+<li><p>png 24，8位3通道颜色表示，GRB分表用8bit位表示，不支持透明。在图片颜色比较丰富，而又不需要透明的时候可以考虑用24位png图，但是这个时候很多都会用JPG来替代了，因为毕竟JPG更小啊</p>
+</li>
+<li><p>png 32，在24位的基础上增加8bit位表示alpha通道，也就是alpha值可以从1到256。</p>
+</li>
+</ul>
+<p>从上面的解释来看，既然png8 和png32 都支持透明，那该如何选择呢？除了png32表示的色彩更丰富，还有一点需要考虑，png8 透明图片的边缘会有毛刺，通过下面的图对比可以看得比较明显。</p>
+<p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/convert_web_compare.png" alt=""></p>
+<p>所以，以后如果你碰到一个类似我作坊的UI，请告诉他正确的切图方式，这是为他好，我担心他会失业。。。</p>
+<h4 id="查看带alpha通道图片的alpha通道"><a href="#查看带alpha通道图片的alpha通道" class="headerlink" title="查看带alpha通道图片的alpha通道"></a>查看带alpha通道图片的alpha通道</h4><p>&emsp;在查阅alpha通道相关概念时，比较容易找到有关alpha通道概念的描述，但是比较难直观的查看alpha通道到底是咋样的，下面就介绍下怎样通过PS查看带alpha通道的图片的alpha通道</p>
+<ul>
+<li>以上面转换成web和设备的32位png为例，将图片拖动到PS</li>
+<li>在图层栏，Ctrl + 鼠标点击图层</li>
+<li>在通道栏，将选区存储为通道，然后就可以看到通道多了一个alpha通道，而这个alpha通道就是该图的alpha通道样式</li>
+</ul>
+<p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/chanel_alpha.png" alt=""></p>
+<p>在上图中，黑色区域就是透明区域，白色区域就是不透明区域，这样就是比较直观的看到图片的alpha通道的样子了。</p>
+<h3 id="png-压缩"><a href="#png-压缩" class="headerlink" title="png 压缩"></a>png 压缩</h3><p> png图片的压缩包括有损压缩和无损压缩，有损压缩这里主要是指将图片转化成webp格式；无损压缩，这里我们是指通过Google提供的zopfli工具对png进行无损压缩。</p>
+<h4 id="png转webp"><a href="#png转webp" class="headerlink" title="png转webp"></a>png转webp</h4><p>&emsp;在Android Studio中选择图片右击 &gt;&gt;Convert to WebP ,然后可以选择有损压缩和无损压缩以及其他的配置项，对于图片质量要求不高的可以选择有损压缩，然后定义适当的压缩比例。</p>
+<p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/convert_to_webp.png" alt=""></p>
+<h4 id="zopfli无损压缩png"><a href="#zopfli无损压缩png" class="headerlink" title="zopfli无损压缩png"></a>zopfli无损压缩png</h4><p> zopfli是Google开源的一款png无损压缩工具，可以将大多数png图片无损压缩10%左右，甚至可以达到30%。zopfli工具的使用请参考<a href="https://juejin.im/entry/578e3a34c4c971005e059ee9" target="_blank" rel="external">这里</a>,如果没有配置过local bin，配置过程可参考<a href="http://christinabergey.com/blog/2013/08/creating-a-bin-folder-on-mac-or-linux-systems/" target="_blank" rel="external">这里</a>。配置好zopfli环境（Mac/Linux）后，就可以通过zoplipng 命令压缩png图片了，一个个压缩比较麻烦，我们可以写个脚本，比如我的Python脚本如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="comment">#iterate current director to find all png file,then compress it</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">transferFile</span><span class="params">()</span>:</span></div><div class="line">    list = os.listdir(<span class="string">'./'</span>)</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> list: <span class="comment"># </span></div><div class="line">        print(i)</div><div class="line">        <span class="keyword">if</span>(i.endswith(<span class="string">'.png'</span>)):</div><div class="line">           doTransfer(i) </div><div class="line">		   </div><div class="line"><span class="comment"># call zopflipng to compress png file 		   </span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">doTransfer</span><span class="params">(i)</span>:</span></div><div class="line">    <span class="keyword">if</span>(<span class="keyword">not</span> os.path.isdir(<span class="string">'zoped'</span>)):</div><div class="line">	    os.makedirs(<span class="string">'zoped'</span>)</div><div class="line">    os.system(<span class="string">'zopflipng '</span> + i + <span class="string">' ./zoped/'</span> + i) </div><div class="line">	</div><div class="line"><span class="comment">#delete the original png file </span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">deletePng</span><span class="params">()</span>:</span></div><div class="line">    os.system(<span class="string">'rm ./*.png'</span>)</div><div class="line"></div><div class="line">transferFile()</div><div class="line">deletePng()</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>&emsp;在对APK资源进行优化的时候，我们可以总结为以下几个方面考虑：</p>
+<ul>
+<li>删除无用资源文件；</li>
+<li>选择正确格式的图片文件；</li>
+<li>压缩图片文件</li>
+</ul>
+<p>参考：</p>
+<p><a href="https://mp.weixin.qq.com/s/DZL3JjoeMu8vo01RPMFBsQ" target="_blank" rel="external">“追踪圣诞老人”— 每年最新API和应用开发技术的试验田</a></p>
+<p><a href="https://dev.qq.com/topic/590fe41429d8be2a14b64da6" target="_blank" rel="external">Android APK 瘦身 - JOOX Music项目实战</a></p>
+<p><a href="http://www.cnblogs.com/peunzhang/archive/2013/05/30/3050394.html" target="_blank" rel="external">PNG的使用技巧</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Portable_Network_Graphics" target="_blank" rel="external">Portable Network Graphics</a></p>
+<p><a href="https://www.w3.org/TR/PNG/" target="_blank" rel="external">Portable Network Graphics (PNG) Specification</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/APK-瘦身/" rel="tag"># APK 瘦身</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/21/Android APK 瘦身实战（一）——APK分析/" rel="next" title="Android APK 瘦身实战（一）——APK分析">
+                <i class="fa fa-chevron-left"></i> Android APK 瘦身实战（一）——APK分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/shymanzhu.JPG"
+               alt="ShymanZhu" />
+          <p class="site-author-name" itemprop="name">ShymanZhu</p>
+           
+              <p class="site-description motion-element" itemprop="description">To be a geek</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#删除无用资源"><span class="nav-number">1.</span> <span class="nav-text">删除无用资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片优化"><span class="nav-number">2.</span> <span class="nav-text">图片优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何选择图片"><span class="nav-number">2.1.</span> <span class="nav-text">如何选择图片</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查看带alpha通道图片的alpha通道"><span class="nav-number">2.1.1.</span> <span class="nav-text">查看带alpha通道图片的alpha通道</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#png-压缩"><span class="nav-number">2.2.</span> <span class="nav-text">png 压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#png转webp"><span class="nav-number">2.2.1.</span> <span class="nav-text">png转webp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zopfli无损压缩png"><span class="nav-number">2.2.2.</span> <span class="nav-text">zopfli无损压缩png</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ShymanZhu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
