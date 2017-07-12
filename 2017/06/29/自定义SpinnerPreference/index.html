@@ -96,7 +96,7 @@
 <meta property="og:description" content="&amp;emsp;我们知道Android提供了CheckBoxPreference, EditTextPreference, ListPreference, MultiSelectListPreference, SwitchPreference等控件。但这些控件不能满足日常有些需求，比如客户要这种效果。
 这种效果，当然我们可以用Textview和Spinner嵌套在LinearLayout中实现，但可以">
 <meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/spinner_preference/spinner_pref.png">
-<meta property="og:updated_time" content="2017-07-12T15:59:33.000Z">
+<meta property="og:updated_time" content="2017-07-12T16:10:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自定义SpinnerPreference">
 <meta name="twitter:description" content="&amp;emsp;我们知道Android提供了CheckBoxPreference, EditTextPreference, ListPreference, MultiSelectListPreference, SwitchPreference等控件。但这些控件不能满足日常有些需求，比如客户要这种效果。
@@ -352,7 +352,7 @@
       
         <p>&emsp;我们知道Android提供了CheckBoxPreference, EditTextPreference, ListPreference, MultiSelectListPreference, SwitchPreference等控件。但这些控件不能满足日常有些需求，比如客户要这种效果。<br><img src="http://oq6yfhskd.bkt.clouddn.com/blog/spinner_preference/spinner_pref.png" alt="image"></p>
 <p>这种效果，当然我们可以用Textview和Spinner嵌套在LinearLayout中实现，但可以扩展性不好，如果有多项话，Layout文件会显得很臃肿。所以我们会想到采用preference来实现。不过在Android提供的Preference中并没有类似于效果图中的这种带有Spinner的，于是就有了这篇博客。</p>
-<h4 id="一，总体方法"><a href="#一，总体方法" class="headerlink" title="一，总体方法"></a>一，总体方法</h4><p>实现带Spinner的Preference我们分为以下几个步骤：</p>
+<h3 id="一，整体方法"><a href="#一，整体方法" class="headerlink" title="一，整体方法"></a>一，整体方法</h3><p>实现带Spinner的Preference我们分为以下几个步骤：</p>
 <ol>
 <li>将Spinner作为widget加进preference。</li>
 <li>定义Spinner对应的显示的数据以及显示数据的对应值等属性，这个类似于ListPreference的entries和entrieValues。</li>
@@ -556,7 +556,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一，总体方法"><span class="nav-number">1.</span> <span class="nav-text">一，总体方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二，具体实现"><span class="nav-number"></span> <span class="nav-text">二，具体实现</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一，整体方法"><span class="nav-number">1.</span> <span class="nav-text">一，整体方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二，具体实现"><span class="nav-number">2.</span> <span class="nav-text">二，具体实现</span></a></li></ol></div>
             
 
           </div>
