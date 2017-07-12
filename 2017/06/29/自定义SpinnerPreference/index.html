@@ -1,0 +1,748 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Spinner,自定义View," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="&amp;emsp;我们知道Android提供了CheckBoxPreference, EditTextPreference, ListPreference, MultiSelectListPreference, SwitchPreference等控件。但这些控件不能满足日常有些需求，比如客户要这种效果。
+这种效果，当然我们可以用Textview和Spinner嵌套在LinearLayout中实现，但可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义SpinnerPreference">
+<meta property="og:url" content="http://yoursite.com/2017/06/29/自定义SpinnerPreference/index.html">
+<meta property="og:site_name" content="ShymanZhu’s blog">
+<meta property="og:description" content="&amp;emsp;我们知道Android提供了CheckBoxPreference, EditTextPreference, ListPreference, MultiSelectListPreference, SwitchPreference等控件。但这些控件不能满足日常有些需求，比如客户要这种效果。
+这种效果，当然我们可以用Textview和Spinner嵌套在LinearLayout中实现，但可以">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/spinner_preference/spinner_pref.png">
+<meta property="og:updated_time" content="2017-07-12T15:59:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义SpinnerPreference">
+<meta name="twitter:description" content="&amp;emsp;我们知道Android提供了CheckBoxPreference, EditTextPreference, ListPreference, MultiSelectListPreference, SwitchPreference等控件。但这些控件不能满足日常有些需求，比如客户要这种效果。
+这种效果，当然我们可以用Textview和Spinner嵌套在LinearLayout中实现，但可以">
+<meta name="twitter:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/spinner_preference/spinner_pref.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/29/自定义SpinnerPreference/"/>
+
+
+
+
+
+  <title> 自定义SpinnerPreference | ShymanZhu’s blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100900902-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ShymanZhu’s blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/29/自定义SpinnerPreference/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ShymanZhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/shymanzhu.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShymanZhu’s blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                自定义SpinnerPreference
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T23:43:30Z">
+                2017-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&emsp;我们知道Android提供了CheckBoxPreference, EditTextPreference, ListPreference, MultiSelectListPreference, SwitchPreference等控件。但这些控件不能满足日常有些需求，比如客户要这种效果。<br><img src="http://oq6yfhskd.bkt.clouddn.com/blog/spinner_preference/spinner_pref.png" alt="image"></p>
+<p>这种效果，当然我们可以用Textview和Spinner嵌套在LinearLayout中实现，但可以扩展性不好，如果有多项话，Layout文件会显得很臃肿。所以我们会想到采用preference来实现。不过在Android提供的Preference中并没有类似于效果图中的这种带有Spinner的，于是就有了这篇博客。</p>
+<h4 id="一，总体方法"><a href="#一，总体方法" class="headerlink" title="一，总体方法"></a>一，总体方法</h4><p>实现带Spinner的Preference我们分为以下几个步骤：</p>
+<ol>
+<li>将Spinner作为widget加进preference。</li>
+<li>定义Spinner对应的显示的数据以及显示数据的对应值等属性，这个类似于ListPreference的entries和entrieValues。</li>
+<li>设定Spinner数据改变的接口</li>
+<li>在xml文件中引用</li>
+</ol>
+<h3 id="二，具体实现"><a href="#二，具体实现" class="headerlink" title="二，具体实现"></a>二，具体实现</h3><p>&emsp; 我们将要实现的preference定义为SpinnerPreference：</p>
+<ul>
+<li>第一步，我们在SpinnerPreference的构造方法通过<code>setWidgetLayoutResource(R.layout.custom_spinner_preference)</code>方法将Spinner加入到preference中。custom_spinner_preferenced定义如下：</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">android.support.v7.widget.AppCompatSpinner</span></span></div><div class="line">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">    <span class="attr">android:focusableInTouchMode</span>=<span class="string">"true"</span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/preference_spinner"</span></div><div class="line">    <span class="attr">android:popupBackground</span>=<span class="string">"@drawable/shape_bg_spinner"</span></div><div class="line">    <span class="attr">android:background</span>=<span class="string">"@drawable/bg_spinner"</span></div><div class="line">    <span class="attr">android:gravity</span>=<span class="string">"center"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span> /&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>第二步，我们要定义spinner中的数据来源，我们参照ListPreference的方式，在atrrs.xml中定义spinner显示的数据以及显示的显示的数据对应的值：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"SpinnerPreference"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"entries"</span> <span class="attr">format</span>=<span class="string">"reference"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"entryValues"</span> <span class="attr">format</span>=<span class="string">"reference"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>第三步，设定spinner数据改变接口。这个主要是在spinner设置的 的OnItemSelectedListener中实现。具体实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">mSpinner.setOnItemSelectedListener(<span class="keyword">new</span> AdapterView.OnItemSelectedListener() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemSelected</span><span class="params">(AdapterView&lt;?&gt; parent, View view, <span class="keyword">int</span> position, <span class="keyword">long</span> id)</span> </span>&#123;</div><div class="line">        CharSequence value = mEntryValues[position];</div><div class="line">        <span class="keyword">if</span> (!value.equals(mCurrentValue))&#123;</div><div class="line">            mOnChangeListener.onPreferenceChange(SpinnerPreference.<span class="keyword">this</span>,value);</div><div class="line">            mCurrentValue = value;</div><div class="line">            SpinnerPreference.<span class="keyword">this</span>.persistInt(position);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNothingSelected</span><span class="params">(AdapterView&lt;?&gt; parent)</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>SpinnerPreference 对外提供的数据改变接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOnPreferenceChangeListener</span><span class="params">(OnPreferenceChangeListener onPreferenceChangeListener)</span> </span>&#123;</div><div class="line">    mOnChangeListener = onPreferenceChangeListener;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>第四步，在xml中引用。<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">PreferenceScreen</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res/com.szxen.carsetting"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">CheckBoxPreference</span></span></div><div class="line">        <span class="attr">android:key</span>=<span class="string">"key_radar_switch_to_reverse"</span></div><div class="line">        <span class="attr">android:layout</span>=<span class="string">"@layout/custom_preference"</span></div><div class="line">        <span class="attr">android:title</span>=<span class="string">"@string/radar_switch_2_reverse"</span></div><div class="line">        <span class="attr">android:widgetLayout</span>=<span class="string">"@layout/custom_preference_widget_checkbox"</span> /&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">com.szxen.carsetting.widget.SpinnerPreference</span></span></div><div class="line">        <span class="attr">app:entries</span>=<span class="string">"@array/camera_entries"</span></div><div class="line">        <span class="attr">app:entryValues</span>=<span class="string">"@array/camera_entries_value"</span></div><div class="line">        <span class="attr">android:key</span>=<span class="string">"key_camera_front"</span></div><div class="line">        <span class="attr">android:layout</span>=<span class="string">"@layout/custom_preference"</span></div><div class="line">        <span class="attr">android:title</span>=<span class="string">"@string/camera_front"</span> /&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">com.szxen.carsetting.widget.SpinnerPreference</span></span></div><div class="line">        <span class="attr">app:entries</span>=<span class="string">"@array/back_camera_entries"</span></div><div class="line">        <span class="attr">app:entryValues</span>=<span class="string">"@array/back_camera_entries_value"</span></div><div class="line">        <span class="attr">android:key</span>=<span class="string">"key_camera_back"</span></div><div class="line">        <span class="attr">android:layout</span>=<span class="string">"@layout/custom_preference"</span></div><div class="line">        <span class="attr">android:title</span>=<span class="string">"@string/camera_back"</span> /&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">com.szxen.carsetting.widget.SpinnerPreference</span></span></div><div class="line">        <span class="attr">app:entries</span>=<span class="string">"@array/camera_entries"</span></div><div class="line">        <span class="attr">app:entryValues</span>=<span class="string">"@array/camera_entries_value"</span></div><div class="line">        <span class="attr">android:key</span>=<span class="string">"key_camera_left"</span></div><div class="line">        <span class="attr">android:layout</span>=<span class="string">"@layout/custom_preference"</span></div><div class="line">        <span class="attr">android:title</span>=<span class="string">"@string/camera_left"</span> /&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">com.szxen.carsetting.widget.SpinnerPreference</span></span></div><div class="line">        <span class="attr">app:entries</span>=<span class="string">"@array/camera_entries"</span></div><div class="line">        <span class="attr">app:entryValues</span>=<span class="string">"@array/camera_entries_value"</span></div><div class="line">        <span class="attr">android:key</span>=<span class="string">"key_camera_right"</span></div><div class="line">        <span class="attr">android:layout</span>=<span class="string">"@layout/custom_preference"</span></div><div class="line">        <span class="attr">android:title</span>=<span class="string">"@string/camera_right"</span> /&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">PreferenceScreen</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>说明：custom_preference为了改变系统preference默认layout的文件,内容和系统的相差无几，主要是布局。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="comment">&lt;!-- Copyright (C) 2006 The Android Open Source Project</span></div><div class="line"></div><div class="line">     Licensed under the Apache License, Version 2.0 (the "License");</div><div class="line">     you may not use this file except in compliance with the License.</div><div class="line">     You may obtain a copy of the License at</div><div class="line"></div><div class="line">          http://www.apache.org/licenses/LICENSE-2.0</div><div class="line"></div><div class="line">     Unless required by applicable law or agreed to in writing, software</div><div class="line">     distributed under the License is distributed on an "AS IS" BASIS,</div><div class="line">     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</div><div class="line">     See the License for the specific language governing permissions and</div><div class="line">     limitations under the License.</div><div class="line">--&gt;</div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Layout for a Preference in a PreferenceActivity. The</span></div><div class="line">     Preference is able to place a specific widget for its particular</div><div class="line">     type in the "widget_frame" layout. --&gt;</div><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span> </span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"@dimen/preference_item_width"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"@dimen/preference_item_height"</span></div><div class="line">    <span class="attr">android:gravity</span>=<span class="string">"center_vertical"</span></div><div class="line">    <span class="attr">android:paddingEnd</span>=<span class="string">"?android:attr/scrollbarSize"</span></div><div class="line">    <span class="attr">android:background</span>=<span class="string">"@drawable/selector_list"</span> &gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+android:id/icon"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_gravity</span>=<span class="string">"center"</span></div><div class="line">        /&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">RelativeLayout</span></span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_marginStart</span>=<span class="string">"15dip"</span></div><div class="line">        <span class="attr">android:layout_marginEnd</span>=<span class="string">"6dip"</span></div><div class="line">        <span class="attr">android:layout_marginTop</span>=<span class="string">"6dip"</span></div><div class="line">        <span class="attr">android:layout_marginBottom</span>=<span class="string">"6dip"</span></div><div class="line">        <span class="attr">android:layout_weight</span>=<span class="string">"1"</span>&gt;</div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">TextView</span> <span class="attr">android:id</span>=<span class="string">"@+android:id/title"</span></span></div><div class="line">            <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">            <span class="attr">android:singleLine</span>=<span class="string">"true"</span></div><div class="line">            <span class="attr">style</span>=<span class="string">"@style/preferenceTitleStyle"</span></div><div class="line">            <span class="attr">android:ellipsize</span>=<span class="string">"marquee"</span></div><div class="line">            <span class="attr">android:fadingEdge</span>=<span class="string">"horizontal"</span> /&gt;</div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">TextView</span> <span class="attr">android:id</span>=<span class="string">"@+android:id/summary"</span></span></div><div class="line">            <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">            <span class="attr">android:layout_toRightOf</span>=<span class="string">"@android:id/title"</span></div><div class="line">            <span class="attr">android:layout_alignTop</span>=<span class="string">"@android:id/title"</span></div><div class="line">            <span class="attr">android:layout_alignParentRight</span>=<span class="string">"true"</span></div><div class="line">            <span class="attr">android:gravity</span>=<span class="string">"right"</span></div><div class="line">            <span class="attr">style</span>=<span class="string">"@style/preferenceSummaryStyle"</span></div><div class="line">            <span class="attr">android:maxLines</span>=<span class="string">"4"</span> /&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- Preference should place its actual preference widget here. --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">android:id</span>=<span class="string">"@+android:id/widget_frame"</span></span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"@dimen/preference_widget_width"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:gravity</span>=<span class="string">"left|center_vertical"</span></div><div class="line">        <span class="attr">android:orientation</span>=<span class="string">"vertical"</span> /&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>最后，附上SpinnerPreference的完整代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.szxen.carsetting.widget;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.content.Context;</div><div class="line"><span class="keyword">import</span> android.content.res.TypedArray;</div><div class="line"><span class="keyword">import</span> android.preference.Preference;</div><div class="line"><span class="keyword">import</span> android.util.AttributeSet;</div><div class="line"><span class="keyword">import</span> android.util.Log;</div><div class="line"><span class="keyword">import</span> android.view.KeyEvent;</div><div class="line"><span class="keyword">import</span> android.view.View;</div><div class="line"><span class="keyword">import</span> android.view.ViewGroup;</div><div class="line"><span class="keyword">import</span> android.widget.AdapterView;</div><div class="line"><span class="keyword">import</span> android.widget.Spinner;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.szxen.carsetting.R;</div><div class="line"><span class="keyword">import</span> com.szxen.carsetting.utils.PreferenceUtils;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by zhuzp on 2016/9/6.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpinnerPreference</span> <span class="keyword">extends</span> <span class="title">Preference</span> <span class="keyword">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span>,<span class="title">View</span>.<span class="title">OnKeyListener</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"SpinnerPreference"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Context mContext;</div><div class="line">    <span class="keyword">private</span> CharSequence[] mEntries;</div><div class="line">    <span class="keyword">private</span> CharSequence[] mEntryValues;</div><div class="line">    <span class="keyword">private</span> CharSequence mCurrentValue = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">private</span> Preference.OnPreferenceChangeListener mOnChangeListener;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Spinner mSpinner;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mDefaultPosition = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SpinnerPreference</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>(context, <span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SpinnerPreference</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context,attrs);</div><div class="line">        setWidgetLayoutResource(R.layout.custom_spinner_preference);</div><div class="line">        init(context,attrs);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(Context context, AttributeSet attrs)</span></span>&#123;</div><div class="line">        mContext = context;</div><div class="line">        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SpinnerPreference);</div><div class="line">        mEntries = a.getTextArray(R.styleable.SpinnerPreference_entries);</div><div class="line">        mEntryValues = a.getTextArray(R.styleable.SpinnerPreference_entryValues);</div><div class="line">        a.recycle();</div><div class="line">        mCurrentValue = mEntryValues[getPersistedInt(mDefaultPosition)];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> View <span class="title">onCreateView</span><span class="params">(ViewGroup parent)</span> </span>&#123;</div><div class="line">        View view = <span class="keyword">super</span>.onCreateView(parent);</div><div class="line">        view.requestFocus();</div><div class="line">        view.setOnClickListener(<span class="keyword">this</span>);</div><div class="line">        <span class="comment">//处理按键事件</span></div><div class="line">        view.setOnKeyListener(<span class="keyword">this</span>);</div><div class="line">        <span class="keyword">return</span> view;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onBindView</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onBindView(view);</div><div class="line">        mSpinner = (Spinner) view.findViewById(R.id.preference_spinner);</div><div class="line">        mSpinner.setAdapter(<span class="keyword">new</span> MySpinnerAdapter(mContext,mEntries));</div><div class="line">        mSpinner.setSelection(getPersistedInt(mDefaultPosition));</div><div class="line">        mSpinner.setOnItemSelectedListener(<span class="keyword">new</span> AdapterView.OnItemSelectedListener() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemSelected</span><span class="params">(AdapterView&lt;?&gt; parent, View view, <span class="keyword">int</span> position, <span class="keyword">long</span> id)</span> </span>&#123;</div><div class="line">                CharSequence value = mEntryValues[position];</div><div class="line">                <span class="keyword">if</span> (!value.equals(mCurrentValue))&#123;</div><div class="line">                    mOnChangeListener.onPreferenceChange(SpinnerPreference.<span class="keyword">this</span>,value);</div><div class="line">                    mCurrentValue = value;</div><div class="line">                    SpinnerPreference.<span class="keyword">this</span>.persistInt(position);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNothingSelected</span><span class="params">(AdapterView&lt;?&gt; parent)</span> </span>&#123;</div><div class="line"></div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOnPreferenceChangeListener</span><span class="params">(OnPreferenceChangeListener onPreferenceChangeListener)</span> </span>&#123;</div><div class="line">        mOnChangeListener = onPreferenceChangeListener;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">        Log.d(TAG,<span class="string">"onClick....."</span>);</div><div class="line">        mSpinner.performClick();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onKey</span><span class="params">(View v, <span class="keyword">int</span> keyCode, KeyEvent event)</span> </span>&#123;</div><div class="line">        <span class="keyword">switch</span> (keyCode)&#123;</div><div class="line">            <span class="keyword">case</span> KeyEvent.KEYCODE_DPAD_CENTER:</div><div class="line">            <span class="keyword">case</span> KeyEvent.KEYCODE_ENTER:</div><div class="line">                mSpinner.performClick();</div><div class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spinner/" rel="tag"># Spinner</a>
+          
+            <a href="/tags/自定义View/" rel="tag"># 自定义View</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/13/Android APK 瘦身实战（二）——资源文件优化/" rel="next" title="Android APK瘦身实战（二）——资源文件优化">
+                <i class="fa fa-chevron-left"></i> Android APK瘦身实战（二）——资源文件优化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/shymanzhu.JPG"
+               alt="ShymanZhu" />
+          <p class="site-author-name" itemprop="name">ShymanZhu</p>
+           
+              <p class="site-description motion-element" itemprop="description">To be a geek</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一，总体方法"><span class="nav-number">1.</span> <span class="nav-text">一，总体方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二，具体实现"><span class="nav-number"></span> <span class="nav-text">二，具体实现</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ShymanZhu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
