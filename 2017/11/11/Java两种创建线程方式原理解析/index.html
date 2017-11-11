@@ -1,0 +1,764 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java,Thread," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="首先，想这样一个问题：在Java中创建并执行线程任务的方式有哪几种？
+
+&amp;emsp; 回忆下，你应该很快就能想起来我们在Java中创建线程的方式有两种：
+
+继承Thread类并重写run()方法，要执行的任务写在run()方法中，然后new 出该类的对象，并调用其start()方法。
+实现Runnable接口，并重写其run()方法，要执行的任务写在run()方法中，然后将实例化的Runnabl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java两种创建线程方式原理解析">
+<meta property="og:url" content="http://yoursite.com/2017/11/11/Java两种创建线程方式原理解析/index.html">
+<meta property="og:site_name" content="ShymanZhu’s blog">
+<meta property="og:description" content="首先，想这样一个问题：在Java中创建并执行线程任务的方式有哪几种？
+
+&amp;emsp; 回忆下，你应该很快就能想起来我们在Java中创建线程的方式有两种：
+
+继承Thread类并重写run()方法，要执行的任务写在run()方法中，然后new 出该类的对象，并调用其start()方法。
+实现Runnable接口，并重写其run()方法，要执行的任务写在run()方法中，然后将实例化的Runnabl">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/thread/sequency_thread.png">
+<meta property="og:updated_time" content="2017-11-11T03:46:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java两种创建线程方式原理解析">
+<meta name="twitter:description" content="首先，想这样一个问题：在Java中创建并执行线程任务的方式有哪几种？
+
+&amp;emsp; 回忆下，你应该很快就能想起来我们在Java中创建线程的方式有两种：
+
+继承Thread类并重写run()方法，要执行的任务写在run()方法中，然后new 出该类的对象，并调用其start()方法。
+实现Runnable接口，并重写其run()方法，要执行的任务写在run()方法中，然后将实例化的Runnabl">
+<meta name="twitter:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/thread/sequency_thread.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/11/Java两种创建线程方式原理解析/"/>
+
+
+
+
+
+  <title> Java两种创建线程方式原理解析 | ShymanZhu’s blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100900902-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ShymanZhu’s blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/11/Java两种创建线程方式原理解析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ShymanZhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/shymanzhu.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShymanZhu’s blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java两种创建线程方式原理解析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-11T19:45:01+08:00">
+                2017-11-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>首先，想这样一个问题：在Java中创建并执行线程任务的方式有哪几种？</p>
+</blockquote>
+<p>&emsp; 回忆下，你应该很快就能想起来我们在Java中创建线程的方式有两种：</p>
+<ul>
+<li>继承Thread类并重写run()方法，要执行的任务写在run()方法中，然后new 出该类的对象，并调用其start()方法。</li>
+<li>实现Runnable接口，并重写其run()方法，要执行的任务写在run()方法中，然后将实例化的Runnable对象以参数的形式传给Thread对象，然后调用Thread.start()方法。</li>
+</ul>
+<p>&emsp; 下面就是两种创建并启动线程的两种写法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        <span class="keyword">new</span> SubThread().start();</div><div class="line"></div><div class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> ImplRunnable()).start();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 实现Runnable接口</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ImplRunnable</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            System.out.println(<span class="string">"implements Runnable "</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 继承Thread类</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SubThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">super</span>.run();</div><div class="line">            System.out.println(<span class="string">"class extends Thread"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p> 在知道两种创建线程的方法后，那么就要想想，为什么这两种方式都是可以创建线程呢？</p>
+<p>首先，看图说话，先看下Thread启动的序列图</p>
+<p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/thread/sequency_thread.png" alt="sequency_thread"></p>
+<ul>
+<li>在主线程中通过调用子线程的start()方法启动子线程；</li>
+<li>Java虚拟机会调用子线程的run()方法，在子线程的run()方法中判断Runnable对象不为空时，调用Runnable的run()方法。</li>
+</ul>
+<p>整体的流程很简单，下面我们通过源码来看具体的实现。</p>
+<p>我们知道启动线程是调用了Thread.start()方法，那么我们就从start()方法开始，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Causes this thread to begin execution; the Java Virtual Machine</div><div class="line"> * calls the &lt;code&gt;run&lt;/code&gt; method of this thread.</div><div class="line"> * &lt;p&gt;</div><div class="line"> * The result is that two threads are running concurrently: the</div><div class="line"> * current thread (which returns from the call to the</div><div class="line"> * &lt;code&gt;start&lt;/code&gt; method) and the other thread (which executes its</div><div class="line"> * &lt;code&gt;run&lt;/code&gt; method).</div><div class="line"> * &lt;p&gt;</div><div class="line"> * It is never legal to start a thread more than once.</div><div class="line"> * In particular, a thread may not be restarted once it has completed</div><div class="line"> * execution.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@exception</span>  IllegalThreadStateException  if the thread was already</div><div class="line"> *               started.</div><div class="line"> * <span class="doctag">@see</span>        #run()</div><div class="line"> * <span class="doctag">@see</span>        #stop()</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * This method is not invoked for the main method thread or "system"</div><div class="line">     * group threads created/set up by the VM. Any new functionality added</div><div class="line">     * to this method in the future may have to also be added to the VM.</div><div class="line">     *</div><div class="line">     * A zero status value corresponds to state "NEW".</div><div class="line">     */</div><div class="line">    <span class="keyword">if</span> (threadStatus != <span class="number">0</span>)</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalThreadStateException();</div><div class="line"></div><div class="line">    <span class="comment">/* Notify the group that this thread is about to be started</span></div><div class="line">     * so that it can be added to the group's list of threads</div><div class="line">     * and the group's unstarted count can be decremented. */</div><div class="line">    group.add(<span class="keyword">this</span>);</div><div class="line"></div><div class="line">    <span class="keyword">boolean</span> started = <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        start0(); <span class="comment">//native 方法，真正start线程实现</span></div><div class="line">        started = <span class="keyword">true</span>;</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">if</span> (!started) &#123;</div><div class="line">                group.threadStartFailed(<span class="keyword">this</span>);</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (Throwable ignore) &#123;</div><div class="line">            <span class="comment">/* do nothing. If start0 threw a Throwable then</span></div><div class="line">              it will be passed up the call stack */</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>start()方法体中的内容，我们不需要关心，主要看方法的说明，里面有提到JVM会调用Thread的run()方法。那么我们接着看run()方法的内容</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * If this thread was constructed using a separate</div><div class="line"> * &lt;code&gt;Runnable&lt;/code&gt; run object, then that</div><div class="line"> * &lt;code&gt;Runnable&lt;/code&gt; object's &lt;code&gt;run&lt;/code&gt; method is called;</div><div class="line"> * otherwise, this method does nothing and returns.</div><div class="line"> * &lt;p&gt;</div><div class="line"> * Subclasses of &lt;code&gt;Thread&lt;/code&gt; should override this method.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@see</span>     #start()</div><div class="line"> * <span class="doctag">@see</span>     #stop()</div><div class="line"> * <span class="doctag">@see</span>     #Thread(ThreadGroup, Runnable, String)</div><div class="line"> */</div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (target != <span class="keyword">null</span>) &#123;</div><div class="line">        target.run();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>重点还是看方法的说明：</p>
+<ul>
+<li>如果在Thread构造方法中传入了Runnable对象，那么会调用Runnable的run()方法；</li>
+<li>如果是继承Thread类，那么子类应该重写run()方法。</li>
+</ul>
+<p>我们可以从Thread(Runnable target)构造方法入手，看下target对象是怎么初始化的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Thread</span><span class="params">(Runnable target)</span> </span>&#123;</div><div class="line">    init(<span class="keyword">null</span>, target, <span class="string">"Thread-"</span> + nextThreadNum(), <span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Initializes a Thread with the current AccessControlContext.</div><div class="line"> * <span class="doctag">@see</span> #init(ThreadGroup,Runnable,String,long,AccessControlContext)</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ThreadGroup g, Runnable target, String name,</span></span></div><div class="line">                  <span class="keyword">long</span> stackSize) &#123;</div><div class="line">    init(g, target, name, stackSize, <span class="keyword">null</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ThreadGroup g, Runnable target, String name,</span></span></div><div class="line">                  <span class="keyword">long</span> stackSize, AccessControlContext acc) &#123;</div><div class="line">    <span class="keyword">if</span> (name == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"name cannot be null"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">this</span>.name = name.toCharArray();</div><div class="line"></div><div class="line">    Thread parent = currentThread();</div><div class="line">    SecurityManager security = System.getSecurityManager();</div><div class="line">    <span class="keyword">if</span> (g == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="comment">/* Determine if it's an applet or not */</span></div><div class="line"></div><div class="line">        <span class="comment">/* If there is a security manager, ask the security manager</span></div><div class="line">           what to do. */</div><div class="line">        <span class="keyword">if</span> (security != <span class="keyword">null</span>) &#123;</div><div class="line">            g = security.getThreadGroup();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">/* If the security doesn't have a strong opinion of the matter</span></div><div class="line">           use the parent thread group. */</div><div class="line">        <span class="keyword">if</span> (g == <span class="keyword">null</span>) &#123;</div><div class="line">            g = parent.getThreadGroup();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/* checkAccess regardless of whether or not threadgroup is</span></div><div class="line">       explicitly passed in. */</div><div class="line">    g.checkAccess();</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">     * Do we have the required permissions?</div><div class="line">     */</div><div class="line">    <span class="keyword">if</span> (security != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">if</span> (isCCLOverridden(getClass())) &#123;</div><div class="line">            security.checkPermission(SUBCLASS_IMPLEMENTATION_PERMISSION);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    g.addUnstarted();</div><div class="line"></div><div class="line">    <span class="keyword">this</span>.group = g;</div><div class="line">    <span class="keyword">this</span>.daemon = parent.isDaemon();</div><div class="line">    <span class="keyword">this</span>.priority = parent.getPriority();</div><div class="line">    <span class="keyword">if</span> (security == <span class="keyword">null</span> || isCCLOverridden(parent.getClass()))</div><div class="line">        <span class="keyword">this</span>.contextClassLoader = parent.getContextClassLoader();</div><div class="line">    <span class="keyword">else</span></div><div class="line">        <span class="keyword">this</span>.contextClassLoader = parent.contextClassLoader;</div><div class="line">    <span class="keyword">this</span>.inheritedAccessControlContext =</div><div class="line">            acc != <span class="keyword">null</span> ? acc : AccessController.getContext();</div><div class="line">    <span class="keyword">this</span>.target = target;  <span class="comment">// target对象在此赋值</span></div><div class="line">    setPriority(priority);</div><div class="line">    <span class="keyword">if</span> (parent.inheritableThreadLocals != <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">this</span>.inheritableThreadLocals =</div><div class="line">            ThreadLocal.createInheritedMap(parent.inheritableThreadLocals);</div><div class="line">    <span class="comment">/* Stash the specified stack size in case the VM cares */</span></div><div class="line">    <span class="keyword">this</span>.stackSize = stackSize;</div><div class="line"></div><div class="line">    <span class="comment">/* Set thread ID */</span></div><div class="line">    tid = nextThreadID();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>&emsp; 在了解两种创建并启动线程的两种方式后，可以去看看Thread的类，类说明里面有提到：</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">* There are two ways to create a new thread of execution. One is to</div><div class="line">* declare a class to be a subclass of &lt;code&gt;Thread&lt;/code&gt;. This</div><div class="line">* subclass should override the &lt;code&gt;run&lt;/code&gt; method of class</div><div class="line">* &lt;code&gt;Thread&lt;/code&gt;.</div></pre></td></tr></table></figure>
+<p>其实，在继承Thread后也可以完全不用重写run()方法，照样可以执行线程的内容。只不过是要修改过下子类的构造方法，比如把开头的例子改成这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        <span class="keyword">new</span> SubThread(<span class="keyword">new</span> ImplRunnable()).start();</div><div class="line"></div><div class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> ImplRunnable()).start();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 实现Runnable接口</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ImplRunnable</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            System.out.println(<span class="string">"implements Runnable "</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 继承Thread类</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SubThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">SubThread</span><span class="params">(Runnable runnable)</span></span>&#123;</div><div class="line">            <span class="keyword">super</span>(runnable);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>为什么这样也可以，相信看完这篇文件你肯定能明白的。至于这样方式是否优雅，反正我是不太喜欢的，只是动点逆向思维，just for fun…</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Thread/" rel="tag"># Thread</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/23/如何正确的给ViewGroup设置OnClickListener/" rel="next" title="如何正确的给ViewGroup设置OnClickListener">
+                <i class="fa fa-chevron-left"></i> 如何正确的给ViewGroup设置OnClickListener
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/shymanzhu.JPG"
+               alt="ShymanZhu" />
+          <p class="site-author-name" itemprop="name">ShymanZhu</p>
+           
+              <p class="site-description motion-element" itemprop="description">To be a geek</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ShymanZhu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
