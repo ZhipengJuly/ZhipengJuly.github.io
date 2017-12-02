@@ -1,0 +1,771 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Lifecycle,架构," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="有一天“谷歌开发者”官微推送了《正式发布 Android 架构组件 1.0 稳定版 | 附带中文介绍视频》，发现这种架构足够秒杀MVP、MVVM，虽然之前的Google I/O大会中也介绍过，但是这次推出是稳定版，而且是可以投入到生产中去。于是就顺着这篇去官网看了使用文档——《Guide to App Architecture》。为了能够更好的理解架构组件的原理，准备先从Lifecycle入手，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 架构组件（一）——Lifecycle-Aware Components">
+<meta property="og:url" content="http://yoursite.com/2017/12/02/Android 架构组件（一）——Lifecycle-Aware Components/index.html">
+<meta property="og:site_name" content="ShymanZhu’s blog">
+<meta property="og:description" content="有一天“谷歌开发者”官微推送了《正式发布 Android 架构组件 1.0 稳定版 | 附带中文介绍视频》，发现这种架构足够秒杀MVP、MVVM，虽然之前的Google I/O大会中也介绍过，但是这次推出是稳定版，而且是可以投入到生产中去。于是就顺着这篇去官网看了使用文档——《Guide to App Architecture》。为了能够更好的理解架构组件的原理，准备先从Lifecycle入手，">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/lifecycle/class_lifecycle.png">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/lifecycle/sequency_lifecycle.png">
+<meta property="og:updated_time" content="2017-12-02T09:41:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 架构组件（一）——Lifecycle-Aware Components">
+<meta name="twitter:description" content="有一天“谷歌开发者”官微推送了《正式发布 Android 架构组件 1.0 稳定版 | 附带中文介绍视频》，发现这种架构足够秒杀MVP、MVVM，虽然之前的Google I/O大会中也介绍过，但是这次推出是稳定版，而且是可以投入到生产中去。于是就顺着这篇去官网看了使用文档——《Guide to App Architecture》。为了能够更好的理解架构组件的原理，准备先从Lifecycle入手，">
+<meta name="twitter:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/lifecycle/class_lifecycle.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/02/Android 架构组件（一）——Lifecycle-Aware Components/"/>
+
+
+
+
+
+  <title> Android 架构组件（一）——Lifecycle-Aware Components | ShymanZhu’s blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100900902-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ShymanZhu’s blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/02/Android 架构组件（一）——Lifecycle-Aware Components/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ShymanZhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/shymanzhu.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShymanZhu’s blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android 架构组件（一）——Lifecycle-Aware Components
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-02T04:45:01+08:00">
+                2017-12-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>有一天“谷歌开发者”官微推送了<a href="http://mp.weixin.qq.com/s/9rC_5GhdAA_EMEbWKJT5vQ" target="_blank" rel="external">《正式发布 Android 架构组件 1.0 稳定版 | 附带中文介绍视频》</a>，发现这种架构足够秒杀MVP、MVVM，虽然之前的Google I/O大会中也介绍过，但是这次推出是稳定版，而且是可以投入到生产中去。于是就顺着这篇去官网看了使用文档——<a href="https://developer.android.google.cn/topic/libraries/architecture/guide.html" target="_blank" rel="external">《Guide to App Architecture》</a>。为了能够更好的理解架构组件的原理，准备先从Lifecycle入手，一步步去理解。</p>
+</blockquote>
+<h2 id="为什么需要Lifecycle组件"><a href="#为什么需要Lifecycle组件" class="headerlink" title="为什么需要Lifecycle组件"></a>为什么需要Lifecycle组件</h2><p>&emsp;Lifecycle组件包括LifecycleOwner、LifecycleObserver。为什么需要Lifecycle组件？一项新的技术的提出肯定是为了解决痛点问题，如果使用过MVP模式的话，有个问题：Presenter感知Activity或者Fragment的生命周期？你可能会这样做，Presenter中定义多个和Activity或者Fragment相应的生命周期方法，然后在Activity或者Fragment中调用Presenter中定义的方法。比如下面的这个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Main Presenter</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainPresenter</span> <span class="keyword">implements</span> <span class="title">IPresenter</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MainPresenter</span><span class="params">(Context context)</span></span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPause</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStop</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IPresenter</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onStart</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onPause</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onStop</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"MainActivity"</span>;</div><div class="line">    <span class="keyword">private</span> IPresenter mPresenter;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        Log.d(TAG, <span class="string">"onCreate: "</span>);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">        mPresenter = <span class="keyword">new</span> MainPresenter(<span class="keyword">this</span>);</div><div class="line">        mPresenter.onCreate();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onStart();</div><div class="line">        Log.d(TAG, <span class="string">"onStart: "</span>);</div><div class="line">        mPresenter.onStart();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onResume();</div><div class="line">        Log.d(TAG, <span class="string">"onResume: "</span>);</div><div class="line">        mPresenter.onResume();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPause</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onPause();</div><div class="line">        Log.d(TAG, <span class="string">"onPause: "</span>);</div><div class="line">        mPresenter.onPause();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onStop</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onStop();</div><div class="line">        Log.d(TAG, <span class="string">"onStop: "</span>);</div><div class="line">        mPresenter.onStop();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onDestroy();</div><div class="line">        Log.d(TAG, <span class="string">"onDestroy: "</span>);</div><div class="line">        mPresenter.onDestroy();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&emsp;上面的例子很容易理解，IPresenter中定义和生命周期相关的几个方法，然后在MainActivity中调用对应的方法。这样做会有个问题：在MainActivity中的每个生命周期方法中都要调用一次IPresenter中的接口，对于爱偷懒的程序员来说，这是不能接受的，所以Lifecycle组件就诞生了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainPresenter</span> <span class="keyword">implements</span> <span class="title">IPresenter</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"MainPresenter"</span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MainPresenter</span><span class="params">(Context context)</span></span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(LifecycleOwner owner)</span> </span>&#123;</div><div class="line">        Log.d(TAG, <span class="string">"onCreate: "</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">(LifecycleOwner owner)</span> </span>&#123;</div><div class="line">        Log.d(TAG, <span class="string">"onStart: "</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">(LifecycleOwner owner)</span> </span>&#123;</div><div class="line">        Log.d(TAG, <span class="string">"onResume: "</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPause</span><span class="params">(LifecycleOwner owner)</span> </span>&#123;</div><div class="line">        Log.d(TAG, <span class="string">"onPause: "</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStop</span><span class="params">(LifecycleOwner owner)</span> </span>&#123;</div><div class="line">        Log.d(TAG, <span class="string">"onStop: "</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">(LifecycleOwner owner)</span> </span>&#123;</div><div class="line">        Log.d(TAG, <span class="string">"onDestroy: "</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IPresenter</span> <span class="keyword">extends</span> <span class="title">DefaultLifecycleObserver</span></span>&#123;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"MainActivity"</span>;</div><div class="line">    <span class="keyword">private</span> IPresenter mPresenter;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        Log.d(TAG, <span class="string">"onCreate: "</span>);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">        mPresenter = <span class="keyword">new</span> MainPresenter(<span class="keyword">this</span>);</div><div class="line">        getLifecycle().addObserver(mPresenter);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onStart();</div><div class="line">        Log.d(TAG, <span class="string">"onStart: "</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onResume();</div><div class="line">        Log.d(TAG, <span class="string">"onResume: "</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPause</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onPause();</div><div class="line">        Log.d(TAG, <span class="string">"onPause: "</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onStop</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onStop();</div><div class="line">        Log.d(TAG, <span class="string">"onStop: "</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onDestroy();</div><div class="line">        Log.d(TAG, <span class="string">"onDestroy: "</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&emsp;代码也很简单，IPrestener接口继承DefaultLifecycleObserver接口，然后MainPresenter实现IPresenter接口，在MainPresenter中，我把DefaultLifecycleObserver中生命周期的方法全实现了，也可以选择实现其中几个，比如你只关心MainActivity的onCreate() 和onDestroy()，那么你就可以在MainPresenter中实现onCreate()和onDestroy()方法。借助实现DefaultLifecycleObserver接口可以让我们少写很多代码。知道为什么需要Lifecycle组件后，你可能会问了，Lifecycle组件实现的原理是什么？这就是下面我要将的内容了。</p>
+<h2 id="Lifecycle组件原理"><a href="#Lifecycle组件原理" class="headerlink" title="Lifecycle组件原理"></a>Lifecycle组件原理</h2><p>&emsp;一般讲到原理，你可能会看到一堆文字的描述，然后就没有看下去的欲望了，能不能来点生动的，比如带点颜色的？好，我懂你，来张高清无码图。</p>
+<p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/lifecycle/class_lifecycle.png" alt="class_lifecyle"></p>
+<p>&emsp;我们以V4包中的Fragment（AppCompatActivity类似）为例，看下Fragment和LifecycleOwner、LifecycleObserver、Lifecycle之间的类关系图。</p>
+<ul>
+<li><p>Lifecycle组件成员Lifecycle被定义成了抽象类，LifecycleOwner、LifecycleObserver被定义成了接口；</p>
+</li>
+<li><p>Fragment实现了LifecycleOwner接口，该只有一个返回Lifecycle对象的方法getLifecyle()；</p>
+</li>
+<li><p>Fragment中getLifecycle()方法返回的是继承了抽象类Lifecycle的LifecycleRegistry。</p>
+</li>
+<li><p>LifecycleRegistry中定义嵌套类ObserverWithState，该类持有GenericLifecycleObserver对象，而GenericLifecycleObserver是继承了LifecycleObserver的接口。</p>
+<p>​</p>
+</li>
+</ul>
+<p>&emsp;对于Fragment、Lifecycle、LifecycleOwner、LifecycleObserver的关系有了一定了解后，可以看一个更直观的图，也就是下面的时序图：</p>
+<p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/lifecycle/sequency_lifecycle.png" alt="sequency"></p>
+<ul>
+<li><p>我们在Fragment（AppCompatActivity也一样）中调用getLifecycle()方法得到LifecycleRegistry对象，然后调用addObserver()方法并将实现了LifecycleObserver接口的对象作为参数传进去。这样一个过程就完成了注册监听的过程。</p>
+</li>
+<li><p>后续就是Fragment生命周期变化时，通知LifecycleObserver的过程：Fragment的performXXX()、onXXX()方法；LifecycleRegistry的handleLifecycleEvent()方法；LifecycleObserver的onXXX()方法。</p>
+</li>
+<li><p>如果你细心点看上面的时序图，你会发现Fragment中performCreate()、performStart()、performResume()会先调用自身的onXXX()方法，然后再调用LifecycleRegistry的handleLifecycleEvent()方法；而在performPause()、performStop()、performDestroy()中会先LifecycleRegistry的handleLifecycleEvent()方法 ，然后调用自身的onXXX()方法。比如上面的例子中，打印出来的结果也确实符合我们的分析，打印结果如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">12-01 14:12:59.250 1398-1398/com.shymanzhu.architecture D/MainActivity: onCreate: </div><div class="line">12-01 14:12:59.342 1398-1398/com.shymanzhu.architecture D/MainPresenter: onCreate: </div><div class="line">12-01 14:12:59.345 1398-1398/com.shymanzhu.architecture D/MainActivity: onStart: </div><div class="line">12-01 14:12:59.345 1398-1398/com.shymanzhu.architecture D/MainPresenter: onStart: </div><div class="line">12-01 14:12:59.346 1398-1398/com.shymanzhu.architecture D/MainActivity: onResume: </div><div class="line">12-01 14:12:59.346 1398-1398/com.shymanzhu.architecture D/MainPresenter: onResume: </div><div class="line">12-01 14:12:59.601 1398-1412/com.shymanzhu.architecture D/OpenGLRenderer: Use EGL_SWAP_BEHAVIOR_PRESERVED: true</div><div class="line">12-01 14:12:59.609 1398-1398/com.shymanzhu.architecture I/imx6.gralloc: open gpu gralloc module!</div><div class="line">12-01 14:12:59.847 1398-1412/com.shymanzhu.architecture I/OpenGLRenderer: Initialized EGL, version 1.4</div><div class="line">12-01 14:13:27.348 1398-1398/com.shymanzhu.architecture D/MainPresenter: onPause: </div><div class="line">12-01 14:13:27.349 1398-1398/com.shymanzhu.architecture D/MainActivity: onPause: </div><div class="line">12-01 14:13:28.265 1398-1398/com.shymanzhu.architecture D/MainPresenter: onStop: </div><div class="line">12-01 14:13:28.266 1398-1398/com.shymanzhu.architecture D/MainActivity: onStop: </div><div class="line">12-01 14:13:28.267 1398-1398/com.shymanzhu.architecture D/MainPresenter: onDestroy: </div><div class="line">12-01 14:13:28.267 1398-1398/com.shymanzhu.architecture D/MainActivity: onDestroy:</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<p>&emsp;到现在为止，是不是觉得对大体的框架和流程更加清楚了呢，其实这个Lifecycle组件就是一套设计模式中观察者模式的例子。按道理说，到这里也差不多结束了，具体的细节就是去跟源码了（既然这么说了，肯定有“但是”，机智如你），但是我觉得还是有必要将一些细节说明下。</p>
+<h2 id="部分细节"><a href="#部分细节" class="headerlink" title="部分细节"></a>部分细节</h2><p>&emsp; LifecycleOwner、LifecycleObserver、Lifecycle的定义都很简洁，就没必要列举出来了，我们从流程图可以看出来，我们要做的内容主要是实现LifecycleObserver接口，然后通过实现了LifecycleOwner接口的对象进行注册，以监听其生命周期，后续就是坐等通知了。</p>
+<h3 id="实现LifecycleObserver接口"><a href="#实现LifecycleObserver接口" class="headerlink" title="实现LifecycleObserver接口"></a>实现LifecycleObserver接口</h3><p>&emsp;从上面的类关系图，我们可以看到有三个接口GenericLifecycleObserver、FullLifecycleObserver、DefaultLifecycleObserver都直接或者间接继承了LifecycleObserver。然而GenericLifecycleObserver是隐藏的，我们用不了。那我们该怎么实现LifecycleObserver接口呢，有两种方式：</p>
+<ul>
+<li>实现DefaultLifecycleObserver接口，然后重写里面生命周期方法；</li>
+<li>直接实现LifecycleObserver接口，然后通过注解的方式来接收生命周期的变化；</li>
+</ul>
+<p>对于这两种形式，Lifecycle.java文档中是建议使用第一种方式，因为文档中说明了，<strong>随着Java8成为主流，注解的方式会被弃用。</strong></p>
+<h3 id="添加观察者"><a href="#添加观察者" class="headerlink" title="添加观察者"></a>添加观察者</h3><p>&emsp;实现LifecycleOwner没什么好说的，我们直接看添加观察者（ addObserver() ），LifecycleRegistry实现了Lifecycle接口，addObserver()实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addObserver</span><span class="params">(@NonNull LifecycleObserver observer)</span> </span>&#123;</div><div class="line">    State initialState = mState == DESTROYED ? DESTROYED : INITIALIZED;</div><div class="line">    ObserverWithState statefulObserver = <span class="keyword">new</span> ObserverWithState(observer, initialState);</div><div class="line">    ObserverWithState previous = mObserverMap.putIfAbsent(observer, statefulObserver);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (previous != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    LifecycleOwner lifecycleOwner = mLifecycleOwner.get();</div><div class="line">    <span class="keyword">if</span> (lifecycleOwner == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="comment">// it is null we should be destroyed. Fallback quickly</span></div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">boolean</span> isReentrance = mAddingObserverCounter != <span class="number">0</span> || mHandlingEvent;</div><div class="line">    State targetState = calculateTargetState(observer);</div><div class="line">    mAddingObserverCounter++;</div><div class="line">    <span class="keyword">while</span> ((statefulObserver.mState.compareTo(targetState) &lt; <span class="number">0</span></div><div class="line">            &amp;&amp; mObserverMap.contains(observer))) &#123;</div><div class="line">        pushParentState(statefulObserver.mState);</div><div class="line">        statefulObserver.dispatchEvent(lifecycleOwner, upEvent(statefulObserver.mState));</div><div class="line">        popParentState();</div><div class="line">        <span class="comment">// mState / subling may have been changed recalculate</span></div><div class="line">        targetState = calculateTargetState(observer);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (!isReentrance) &#123;</div><div class="line">        <span class="comment">// we do sync only on the top level.</span></div><div class="line">        sync();</div><div class="line">    &#125;</div><div class="line">    mAddingObserverCounter--;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在该方法中主要关注一点：</p>
+<ul>
+<li>根据observer和initialState构造ObserverWithState对象statefulObserver，然后将该对象存入mObserverMap，可以简单的把它理解成用来保存观察者的Map。</li>
+</ul>
+<h3 id="坐等通知"><a href="#坐等通知" class="headerlink" title="坐等通知"></a>坐等通知</h3><p>&emsp; 添加观察者后，那观察者接下来就是坐等通知了。从上面的时序图中，我们看到Fragment是通过LifecycleRegistry.handleLifecycleEvent()方法通知LifecycleRegistry其生命周期的，那我们看下LifecycleRegistry的handleLifecycleEvent()相关的方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleLifecycleEvent</span><span class="params">(@NonNull Lifecycle.Event event)</span> </span>&#123;</div><div class="line">        State next = getStateAfter(event);<span class="comment">//计算下一个生命周期状态</span></div><div class="line">        moveToState(next);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">moveToState</span><span class="params">(State next)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mState == next) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        mState = next;</div><div class="line">        <span class="keyword">if</span> (mHandlingEvent || mAddingObserverCounter != <span class="number">0</span>) &#123;</div><div class="line">            mNewEventOccurred = <span class="keyword">true</span>;</div><div class="line">            <span class="comment">// we will figure out what to do on upper level.</span></div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        mHandlingEvent = <span class="keyword">true</span>;</div><div class="line">        sync(); <span class="comment">//看下sync()方法的具体实现</span></div><div class="line">        mHandlingEvent = <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sync</span><span class="params">()</span> </span>&#123;</div><div class="line">        LifecycleOwner lifecycleOwner = mLifecycleOwner.get();</div><div class="line">        <span class="keyword">if</span> (lifecycleOwner == <span class="keyword">null</span>) &#123;</div><div class="line">            Log.w(LOG_TAG, <span class="string">"LifecycleOwner is garbage collected, you shouldn't try dispatch "</span></div><div class="line">                    + <span class="string">"new events from it."</span>);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">while</span> (!isSynced()) &#123;</div><div class="line">            mNewEventOccurred = <span class="keyword">false</span>;</div><div class="line">            <span class="comment">// no need to check eldest for nullability, because isSynced does it for us.</span></div><div class="line">            <span class="comment">//比较当前的生命周期和Map中第一个的观察者的生命周期，下面的另一个if语句类似。</span></div><div class="line">            <span class="keyword">if</span> (mState.compareTo(mObserverMap.eldest().getValue().mState) &lt; <span class="number">0</span>) &#123;</div><div class="line">                backwardPass(lifecycleOwner);</div><div class="line">            &#125;</div><div class="line">            Entry&lt;LifecycleObserver, ObserverWithState&gt; newest = mObserverMap.newest();</div><div class="line">            <span class="keyword">if</span> (!mNewEventOccurred &amp;&amp; newest != <span class="keyword">null</span></div><div class="line">                    &amp;&amp; mState.compareTo(newest.getValue().mState) &gt; <span class="number">0</span>) &#123;</div><div class="line">                forwardPass(lifecycleOwner);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        mNewEventOccurred = <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="comment">//看下forwardPass()方法</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">forwardPass</span><span class="params">(LifecycleOwner lifecycleOwner)</span> </span>&#123;</div><div class="line">        Iterator&lt;Entry&lt;LifecycleObserver, ObserverWithState&gt;&gt; ascendingIterator =</div><div class="line">                mObserverMap.iteratorWithAdditions();</div><div class="line">        <span class="keyword">while</span> (ascendingIterator.hasNext() &amp;&amp; !mNewEventOccurred) &#123;</div><div class="line">            Entry&lt;LifecycleObserver, ObserverWithState&gt; entry = ascendingIterator.next();</div><div class="line">            ObserverWithState observer = entry.getValue();</div><div class="line">            <span class="keyword">while</span> ((observer.mState.compareTo(mState) &lt; <span class="number">0</span> &amp;&amp; !mNewEventOccurred</div><div class="line">                    &amp;&amp; mObserverMap.contains(entry.getKey()))) &#123;</div><div class="line">                pushParentState(observer.mState);</div><div class="line">                observer.dispatchEvent(lifecycleOwner, upEvent(observer.mState));</div><div class="line">                popParentState();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ObserverWithState</span> </span>&#123;</div><div class="line">        State mState;</div><div class="line">        GenericLifecycleObserver mLifecycleObserver;</div><div class="line"></div><div class="line">        ObserverWithState(LifecycleObserver observer, State initialState) &#123;</div><div class="line">            mLifecycleObserver = Lifecycling.getCallback(observer);</div><div class="line">            mState = initialState;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">dispatchEvent</span><span class="params">(LifecycleOwner owner, Event event)</span> </span>&#123;</div><div class="line">            State newState = getStateAfter(event);</div><div class="line">            mState = min(mState, newState);</div><div class="line">            mLifecycleObserver.onStateChanged(owner, event); <span class="comment">//通知观察者生命周期变化。</span></div><div class="line">            mState = newState;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>代码中大体的细节就是这样子，当然更细的内容只能通过你自己去了解了，建议明白Lifecycle组件的框架和结构后，再去看它实现的细节，而不是一上来就深究代码，那让会让你只见树木不见森林。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Lifecycle/" rel="tag"># Lifecycle</a>
+          
+            <a href="/tags/架构/" rel="tag"># 架构</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/11/Java两种创建线程方式原理解析/" rel="next" title="Java两种创建线程方式原理解析">
+                <i class="fa fa-chevron-left"></i> Java两种创建线程方式原理解析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/shymanzhu.JPG"
+               alt="ShymanZhu" />
+          <p class="site-author-name" itemprop="name">ShymanZhu</p>
+           
+              <p class="site-description motion-element" itemprop="description">To be a geek</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要Lifecycle组件"><span class="nav-number">1.</span> <span class="nav-text">为什么需要Lifecycle组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lifecycle组件原理"><span class="nav-number">2.</span> <span class="nav-text">Lifecycle组件原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部分细节"><span class="nav-number">3.</span> <span class="nav-text">部分细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现LifecycleObserver接口"><span class="nav-number">3.1.</span> <span class="nav-text">实现LifecycleObserver接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加观察者"><span class="nav-number">3.2.</span> <span class="nav-text">添加观察者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#坐等通知"><span class="nav-number">3.3.</span> <span class="nav-text">坐等通知</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ShymanZhu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
