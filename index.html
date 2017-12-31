@@ -1,11 +1,85 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
+
+
+
   
-  <title>ShymanZhu’s blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="To be a geek">
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="To be a geek">
 <meta property="og:type" content="website">
 <meta property="og:title" content="ShymanZhu’s blog">
 <meta property="og:url" content="http://yoursite.com/index.html">
@@ -14,79 +88,221 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ShymanZhu’s blog">
 <meta name="twitter:description" content="To be a geek">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/"/>
+
+
+
+
+
+  <title>ShymanZhu’s blog</title>
   
-    <link rel="alternate" href="/atom.xml" title="ShymanZhu’s blog" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  
+
+
+
+
+
+
+
 
 </head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">ShymanZhu’s blog</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
   
-    <article id="post-Android架构组件（三）——ViewModel" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/28/Android架构组件（三）——ViewModel/" class="article-date">
-  <time datetime="2017-12-27T22:08:30.000Z" itemprop="datePublished">2017-12-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/28/Android架构组件（三）——ViewModel/">Android架构组件（三）——ViewModel</a>
-    </h1>
+    
   
 
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ShymanZhu’s blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/28/Android架构组件（三）——ViewModel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ShymanZhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShymanZhu’s blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/28/Android架构组件（三）——ViewModel/" itemprop="url">Android架构组件（三）——ViewModel</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-27T22:08:30Z">
+                2017-12-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <blockquote>
+      
+
+      
+        
+          
+            <blockquote>
 <p>上一篇文章讲到了Android架构组件之LiveData（<a href="http://shymanzhu.com/2017/12/23/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94LiveData/" target="_blank" rel="external">Android架构组件（二）——LiveData</a>)，现在我们再来看看另一个成员ViewModel。</p>
 </blockquote>
 <h2 id="ViewModel是什么？"><a href="#ViewModel是什么？" class="headerlink" title="ViewModel是什么？"></a>ViewModel是什么？</h2><p>&emsp;ViewModel，从字面上理解的话，我们也能想到它肯定是跟视图(View)以及数据(Model)相关的。正像它字面意思一样，它是负责准备和管理和UI组件(Fragment/Activity)相关的数据类，也就是说ViewModel是用来管理UI相关的数据的。同时ViewModel还可以用来负责UI组件间的通信，这一点后面我们会有例子说明。</p>
@@ -152,44 +368,125 @@
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>&emsp;总结，额….还是由你们来完成，抛一个问题来作为总结吧：为什么ViewModel的生命周期比使用它的Activity/Fragment的生命周期更长呢？ 如果你有认真看完这篇文章，我相信这个问题是难不倒你，如果没想到，那就多看几遍吧。最后，提供一张图来帮助你想这个问题。</p>
 <p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/viewmodel/lifecyle_viewmodel.png" alt="lifecyle_viewmodel"></p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/28/Android架构组件（三）——ViewModel/" data-id="cjbu8bw3u00009nvgbsbdyu8i" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ViewModel/">ViewModel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/架构/">架构</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-Android架构组件（二）——LiveData" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/23/Android架构组件（二）——LiveData/" class="article-date">
-  <time datetime="2017-12-22T21:35:20.000Z" itemprop="datePublished">2017-12-22</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/23/Android架构组件（二）——LiveData/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ShymanZhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShymanZhu’s blog">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/23/Android架构组件（二）——LiveData/">Android 架构组件（二）——LiveData</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/23/Android架构组件（二）——LiveData/" itemprop="url">Android 架构组件（二）——LiveData</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-22T21:35:20Z">
+                2017-12-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <blockquote>
+      
+
+      
+        
+          
+            <blockquote>
 <p>上一篇文章讲到了Android架构组件之一Lifecycle组件（<a href="http://shymanzhu.com/2017/12/02/Android%20%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94Lifecycle-Aware%20Components/#more" target="_blank" rel="external">Android 架构组件（一）——Lifecycle-Aware Components</a>)，现在我们再来看看另一个成员LiveData。</p>
 </blockquote>
 <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>&emsp;简单地说，LiveData是一个数据持有类。它具有以下特点：</p>
@@ -298,44 +595,125 @@
 <p>&emsp;postValue()方法通过ArchTaskExecutor实现在主线程中执行mPostValueRunnable对象中的内容，而在mPostValueRunnable中最终会调用setValue()方法来实现改变LiveData存储的数据。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>&emsp;整个流程下来，你会发现其实LiveData的原理还是蛮简单的。当然LiveData还有更多的使用方法，具体的内容只有在你使用到的时候再去研究吧，我先抛砖引玉，剩下的就看你们的啦……</p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/23/Android架构组件（二）——LiveData/" data-id="cjbu7s6r400006wvgs7rdab9h" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LiveData/">LiveData</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/架构/">架构</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-Android 架构组件（一）——Lifecycle-Aware Components" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/02/Android 架构组件（一）——Lifecycle-Aware Components/" class="article-date">
-  <time datetime="2017-12-01T20:45:01.000Z" itemprop="datePublished">2017-12-01</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/02/Android 架构组件（一）——Lifecycle-Aware Components/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ShymanZhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShymanZhu’s blog">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/02/Android 架构组件（一）——Lifecycle-Aware Components/">Android 架构组件（一）——Lifecycle-Aware Components</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/02/Android 架构组件（一）——Lifecycle-Aware Components/" itemprop="url">Android 架构组件（一）——Lifecycle-Aware Components</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-01T20:45:01Z">
+                2017-12-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <blockquote>
+      
+
+      
+        
+          
+            <blockquote>
 <p>有一天“谷歌开发者”官微推送了<a href="http://mp.weixin.qq.com/s/9rC_5GhdAA_EMEbWKJT5vQ" target="_blank" rel="external">《正式发布 Android 架构组件 1.0 稳定版 | 附带中文介绍视频》</a>，发现这种架构足够秒杀MVP、MVVM，虽然之前的Google I/O大会中也介绍过，但是这次推出是稳定版，而且是可以投入到生产中去。于是就顺着这篇去官网看了使用文档——<a href="https://developer.android.google.cn/topic/libraries/architecture/guide.html" target="_blank" rel="external">《Guide to App Architecture》</a>。为了能够更好的理解架构组件的原理，准备先从Lifecycle入手，一步步去理解。</p>
 </blockquote>
 <h2 id="为什么需要Lifecycle组件"><a href="#为什么需要Lifecycle组件" class="headerlink" title="为什么需要Lifecycle组件"></a>为什么需要Lifecycle组件</h2><p>&emsp;Lifecycle组件包括LifecycleOwner、LifecycleObserver。为什么需要Lifecycle组件？一项新的技术的提出肯定是为了解决痛点问题，如果使用过MVP模式的话，有个问题：Presenter感知Activity或者Fragment的生命周期？你可能会这样做，Presenter中定义多个和Activity或者Fragment相应的生命周期方法，然后在Activity或者Fragment中调用Presenter中定义的方法。比如下面的这个例子：</p>
@@ -391,44 +769,125 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleLifecycleEvent</span><span class="params">(@NonNull Lifecycle.Event event)</span> </span>&#123;</div><div class="line">        State next = getStateAfter(event);<span class="comment">//计算下一个生命周期状态</span></div><div class="line">        moveToState(next);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">moveToState</span><span class="params">(State next)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mState == next) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        mState = next;</div><div class="line">        <span class="keyword">if</span> (mHandlingEvent || mAddingObserverCounter != <span class="number">0</span>) &#123;</div><div class="line">            mNewEventOccurred = <span class="keyword">true</span>;</div><div class="line">            <span class="comment">// we will figure out what to do on upper level.</span></div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        mHandlingEvent = <span class="keyword">true</span>;</div><div class="line">        sync(); <span class="comment">//看下sync()方法的具体实现</span></div><div class="line">        mHandlingEvent = <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sync</span><span class="params">()</span> </span>&#123;</div><div class="line">        LifecycleOwner lifecycleOwner = mLifecycleOwner.get();</div><div class="line">        <span class="keyword">if</span> (lifecycleOwner == <span class="keyword">null</span>) &#123;</div><div class="line">            Log.w(LOG_TAG, <span class="string">"LifecycleOwner is garbage collected, you shouldn't try dispatch "</span></div><div class="line">                    + <span class="string">"new events from it."</span>);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">while</span> (!isSynced()) &#123;</div><div class="line">            mNewEventOccurred = <span class="keyword">false</span>;</div><div class="line">            <span class="comment">// no need to check eldest for nullability, because isSynced does it for us.</span></div><div class="line">            <span class="comment">//比较当前的生命周期和Map中第一个的观察者的生命周期，下面的另一个if语句类似。</span></div><div class="line">            <span class="keyword">if</span> (mState.compareTo(mObserverMap.eldest().getValue().mState) &lt; <span class="number">0</span>) &#123;</div><div class="line">                backwardPass(lifecycleOwner);</div><div class="line">            &#125;</div><div class="line">            Entry&lt;LifecycleObserver, ObserverWithState&gt; newest = mObserverMap.newest();</div><div class="line">            <span class="keyword">if</span> (!mNewEventOccurred &amp;&amp; newest != <span class="keyword">null</span></div><div class="line">                    &amp;&amp; mState.compareTo(newest.getValue().mState) &gt; <span class="number">0</span>) &#123;</div><div class="line">                forwardPass(lifecycleOwner);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        mNewEventOccurred = <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="comment">//看下forwardPass()方法</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">forwardPass</span><span class="params">(LifecycleOwner lifecycleOwner)</span> </span>&#123;</div><div class="line">        Iterator&lt;Entry&lt;LifecycleObserver, ObserverWithState&gt;&gt; ascendingIterator =</div><div class="line">                mObserverMap.iteratorWithAdditions();</div><div class="line">        <span class="keyword">while</span> (ascendingIterator.hasNext() &amp;&amp; !mNewEventOccurred) &#123;</div><div class="line">            Entry&lt;LifecycleObserver, ObserverWithState&gt; entry = ascendingIterator.next();</div><div class="line">            ObserverWithState observer = entry.getValue();</div><div class="line">            <span class="keyword">while</span> ((observer.mState.compareTo(mState) &lt; <span class="number">0</span> &amp;&amp; !mNewEventOccurred</div><div class="line">                    &amp;&amp; mObserverMap.contains(entry.getKey()))) &#123;</div><div class="line">                pushParentState(observer.mState);</div><div class="line">                observer.dispatchEvent(lifecycleOwner, upEvent(observer.mState));</div><div class="line">                popParentState();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ObserverWithState</span> </span>&#123;</div><div class="line">        State mState;</div><div class="line">        GenericLifecycleObserver mLifecycleObserver;</div><div class="line"></div><div class="line">        ObserverWithState(LifecycleObserver observer, State initialState) &#123;</div><div class="line">            mLifecycleObserver = Lifecycling.getCallback(observer);</div><div class="line">            mState = initialState;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">dispatchEvent</span><span class="params">(LifecycleOwner owner, Event event)</span> </span>&#123;</div><div class="line">            State newState = getStateAfter(event);</div><div class="line">            mState = min(mState, newState);</div><div class="line">            mLifecycleObserver.onStateChanged(owner, event); <span class="comment">//通知观察者生命周期变化。</span></div><div class="line">            mState = newState;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <p>代码中大体的细节就是这样子，当然更细的内容只能通过你自己去了解了，建议明白Lifecycle组件的框架和结构后，再去看它实现的细节，而不是一上来就深究代码，那让会让你只见树木不见森林。</p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/02/Android 架构组件（一）——Lifecycle-Aware Components/" data-id="cjbu74ywt000257vgdmxrrlei" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lifecycle/">Lifecycle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/架构/">架构</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-Java两种创建线程方式原理解析" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/11/11/Java两种创建线程方式原理解析/" class="article-date">
-  <time datetime="2017-11-11T11:45:01.000Z" itemprop="datePublished">2017-11-11</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/11/Java两种创建线程方式原理解析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ShymanZhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShymanZhu’s blog">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/11/Java两种创建线程方式原理解析/">Java两种创建线程方式原理解析</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/11/Java两种创建线程方式原理解析/" itemprop="url">Java两种创建线程方式原理解析</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-11T11:45:01Z">
+                2017-11-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <blockquote>
+      
+
+      
+        
+          
+            <blockquote>
 <p>首先，想这样一个问题：在Java中创建并执行线程任务的方式有哪几种？</p>
 </blockquote>
 <p>&emsp; 回忆下，你应该很快就能想起来我们在Java中创建线程的方式有两种：</p>
@@ -463,44 +922,125 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        <span class="keyword">new</span> SubThread(<span class="keyword">new</span> ImplRunnable()).start();</div><div class="line"></div><div class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> ImplRunnable()).start();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 实现Runnable接口</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ImplRunnable</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            System.out.println(<span class="string">"implements Runnable "</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 继承Thread类</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SubThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">SubThread</span><span class="params">(Runnable runnable)</span></span>&#123;</div><div class="line">            <span class="keyword">super</span>(runnable);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>为什么这样也可以，相信看完这篇文件你肯定能明白的。至于这样方式是否优雅，反正我是不太喜欢的，只是动点逆向思维，just for fun…</p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/11/Java两种创建线程方式原理解析/" data-id="cjbu74yxe000957vg2lu8ihyr" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Thread/">Thread</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-如何正确的给ViewGroup设置OnClickListener" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/07/23/如何正确的给ViewGroup设置OnClickListener/" class="article-date">
-  <time datetime="2017-07-22T22:37:01.000Z" itemprop="datePublished">2017-07-22</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/如何正确的给ViewGroup设置OnClickListener/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ShymanZhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShymanZhu’s blog">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/23/如何正确的给ViewGroup设置OnClickListener/">如何正确的给ViewGroup设置OnClickListener</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/23/如何正确的给ViewGroup设置OnClickListener/" itemprop="url">如何正确的给ViewGroup设置OnClickListener</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-22T22:37:01Z">
+                2017-07-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <blockquote>
+      
+
+      
+        
+          
+            <blockquote>
 <p>在Android的日常开发中，我们总会碰到要给某个LinearLayout、RelativeLayout等设置OnClickListener，以便达到点击其子view能够触发设置的OnClickListener。但是当我们点击子view的时候，对应的Listener并没有触发到，这是为什么呢，接下来我们将结合例子从源码角度去解释它。</p>
 </blockquote>
 <h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>  我们从一个简单的需求出发：有一个Button和一个TextView，当他们被点击后都要响应相同的事件。我们可以同时设置Button和TextView的点击监听，但是这样代码量就比较大了。作为爱偷懒的程序员，又怎么愿意这么干呢，反正我的内心是拒绝的。我们容易想到的方法就是给Button和TextView所在的ViewGroup设置点击事件。可能我们会这样做：</p>
@@ -567,44 +1107,125 @@
 <p>然后一直“F8”，然后走到”if (((viewFlags &amp; CLICKABLE) == CLICKABLE ||(viewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE))”中，你会发现<strong>进入了这个if语句后，View的onTouchEvent()方法返回的都是true，如果没进if语句，返回的就是false。</strong></p>
 <p>当从View的onTouchEvent()中返回后，回到TextView.onTouchEvent()方法，然后一步步走下去，你会发现最终TextView.onTouchEvent()返回的就是super.onTouchEvent()的返回值。<strong>所以要想上面的例子中的LinearLayout响应点击事件，要设置Button的android:clickable=”false”。</strong></p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/23/如何正确的给ViewGroup设置OnClickListener/" data-id="cjbu74yxh000b57vg3sqlca1a" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-Android Studio 如何像Eclipse一样配置User Library" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/07/10/Android Studio 如何像Eclipse一样配置User Library/" class="article-date">
-  <time datetime="2017-07-09T20:27:01.000Z" itemprop="datePublished">2017-07-09</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/10/Android Studio 如何像Eclipse一样配置User Library/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ShymanZhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShymanZhu’s blog">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/10/Android Studio 如何像Eclipse一样配置User Library/">Android Studio 如何像Eclipse一样配置User Library</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/10/Android Studio 如何像Eclipse一样配置User Library/" itemprop="url">Android Studio 如何像Eclipse一样配置User Library</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-09T20:27:01Z">
+                2017-07-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <blockquote>
+      
+
+      
+        
+          
+            <blockquote>
 <p>熟悉了用Eclipse开发Android应用，转用Android Studio的时候总会碰到一些在Eclipse中很好用的功能，在Android Studio中找不到应用的功能，比如导入第三方jar包。</p>
 </blockquote>
 <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>​        熟悉Eclipse的都知道，当我们要导入第三方jar包，我们一般<strong>不会</strong>将jar包放在项目的libs文件夹下，特别是可能多个项目同时会用到同一个jar包时，一般我们都是在User Libraries中new 一个User Library，然后将为其配置特定的jar包。</p>
@@ -624,44 +1245,125 @@
 </li>
 </ul>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/10/Android Studio 如何像Eclipse一样配置User Library/" data-id="cjbu74yx7000657vgdmlo8qwq" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android-Studio/">Android Studio</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-自定义SpinnerPreference" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/06/29/自定义SpinnerPreference/" class="article-date">
-  <time datetime="2017-06-28T23:43:30.000Z" itemprop="datePublished">2017-06-28</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/29/自定义SpinnerPreference/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ShymanZhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShymanZhu’s blog">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/29/自定义SpinnerPreference/">自定义SpinnerPreference</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/29/自定义SpinnerPreference/" itemprop="url">自定义SpinnerPreference</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T23:43:30Z">
+                2017-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>&emsp;我们知道Android提供了CheckBoxPreference, EditTextPreference, ListPreference, MultiSelectListPreference, SwitchPreference等控件。但这些控件不能满足日常有些需求，比如客户要这种效果。<br><img src="http://oq6yfhskd.bkt.clouddn.com/blog/spinner_preference/spinner_pref.png" alt="image"></p>
+      
+
+      
+        
+          
+            <p>&emsp;我们知道Android提供了CheckBoxPreference, EditTextPreference, ListPreference, MultiSelectListPreference, SwitchPreference等控件。但这些控件不能满足日常有些需求，比如客户要这种效果。<br><img src="http://oq6yfhskd.bkt.clouddn.com/blog/spinner_preference/spinner_pref.png" alt="image"></p>
 <p>这种效果，当然我们可以用Textview和Spinner嵌套在LinearLayout中实现，但可以扩展性不好，如果有多项话，Layout文件会显得很臃肿。所以我们会想到采用preference来实现。不过在Android提供的Preference中并没有类似于效果图中的这种带有Spinner的，于是就有了这篇博客。</p>
 <h3 id="一，整体方法"><a href="#一，整体方法" class="headerlink" title="一，整体方法"></a>一，整体方法</h3><p>实现带Spinner的Preference我们分为以下几个步骤：</p>
 <ol>
@@ -692,44 +1394,125 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="comment">&lt;!-- Copyright (C) 2006 The Android Open Source Project</span></div><div class="line"></div><div class="line">     Licensed under the Apache License, Version 2.0 (the "License");</div><div class="line">     you may not use this file except in compliance with the License.</div><div class="line">     You may obtain a copy of the License at</div><div class="line"></div><div class="line">          http://www.apache.org/licenses/LICENSE-2.0</div><div class="line"></div><div class="line">     Unless required by applicable law or agreed to in writing, software</div><div class="line">     distributed under the License is distributed on an "AS IS" BASIS,</div><div class="line">     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</div><div class="line">     See the License for the specific language governing permissions and</div><div class="line">     limitations under the License.</div><div class="line">--&gt;</div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Layout for a Preference in a PreferenceActivity. The</span></div><div class="line">     Preference is able to place a specific widget for its particular</div><div class="line">     type in the "widget_frame" layout. --&gt;</div><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span> </span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"@dimen/preference_item_width"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"@dimen/preference_item_height"</span></div><div class="line">    <span class="attr">android:gravity</span>=<span class="string">"center_vertical"</span></div><div class="line">    <span class="attr">android:paddingEnd</span>=<span class="string">"?android:attr/scrollbarSize"</span></div><div class="line">    <span class="attr">android:background</span>=<span class="string">"@drawable/selector_list"</span> &gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+android:id/icon"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_gravity</span>=<span class="string">"center"</span></div><div class="line">        /&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">RelativeLayout</span></span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_marginStart</span>=<span class="string">"15dip"</span></div><div class="line">        <span class="attr">android:layout_marginEnd</span>=<span class="string">"6dip"</span></div><div class="line">        <span class="attr">android:layout_marginTop</span>=<span class="string">"6dip"</span></div><div class="line">        <span class="attr">android:layout_marginBottom</span>=<span class="string">"6dip"</span></div><div class="line">        <span class="attr">android:layout_weight</span>=<span class="string">"1"</span>&gt;</div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">TextView</span> <span class="attr">android:id</span>=<span class="string">"@+android:id/title"</span></span></div><div class="line">            <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">            <span class="attr">android:singleLine</span>=<span class="string">"true"</span></div><div class="line">            <span class="attr">style</span>=<span class="string">"@style/preferenceTitleStyle"</span></div><div class="line">            <span class="attr">android:ellipsize</span>=<span class="string">"marquee"</span></div><div class="line">            <span class="attr">android:fadingEdge</span>=<span class="string">"horizontal"</span> /&gt;</div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">TextView</span> <span class="attr">android:id</span>=<span class="string">"@+android:id/summary"</span></span></div><div class="line">            <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">            <span class="attr">android:layout_toRightOf</span>=<span class="string">"@android:id/title"</span></div><div class="line">            <span class="attr">android:layout_alignTop</span>=<span class="string">"@android:id/title"</span></div><div class="line">            <span class="attr">android:layout_alignParentRight</span>=<span class="string">"true"</span></div><div class="line">            <span class="attr">android:gravity</span>=<span class="string">"right"</span></div><div class="line">            <span class="attr">style</span>=<span class="string">"@style/preferenceSummaryStyle"</span></div><div class="line">            <span class="attr">android:maxLines</span>=<span class="string">"4"</span> /&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- Preference should place its actual preference widget here. --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">android:id</span>=<span class="string">"@+android:id/widget_frame"</span></span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"@dimen/preference_widget_width"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:gravity</span>=<span class="string">"left|center_vertical"</span></div><div class="line">        <span class="attr">android:orientation</span>=<span class="string">"vertical"</span> /&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>最后，附上SpinnerPreference的完整代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.szxen.carsetting.widget;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.content.Context;</div><div class="line"><span class="keyword">import</span> android.content.res.TypedArray;</div><div class="line"><span class="keyword">import</span> android.preference.Preference;</div><div class="line"><span class="keyword">import</span> android.util.AttributeSet;</div><div class="line"><span class="keyword">import</span> android.util.Log;</div><div class="line"><span class="keyword">import</span> android.view.KeyEvent;</div><div class="line"><span class="keyword">import</span> android.view.View;</div><div class="line"><span class="keyword">import</span> android.view.ViewGroup;</div><div class="line"><span class="keyword">import</span> android.widget.AdapterView;</div><div class="line"><span class="keyword">import</span> android.widget.Spinner;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.szxen.carsetting.R;</div><div class="line"><span class="keyword">import</span> com.szxen.carsetting.utils.PreferenceUtils;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by zhuzp on 2016/9/6.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpinnerPreference</span> <span class="keyword">extends</span> <span class="title">Preference</span> <span class="keyword">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span>,<span class="title">View</span>.<span class="title">OnKeyListener</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"SpinnerPreference"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Context mContext;</div><div class="line">    <span class="keyword">private</span> CharSequence[] mEntries;</div><div class="line">    <span class="keyword">private</span> CharSequence[] mEntryValues;</div><div class="line">    <span class="keyword">private</span> CharSequence mCurrentValue = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">private</span> Preference.OnPreferenceChangeListener mOnChangeListener;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Spinner mSpinner;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mDefaultPosition = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SpinnerPreference</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>(context, <span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SpinnerPreference</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context,attrs);</div><div class="line">        setWidgetLayoutResource(R.layout.custom_spinner_preference);</div><div class="line">        init(context,attrs);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(Context context, AttributeSet attrs)</span></span>&#123;</div><div class="line">        mContext = context;</div><div class="line">        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SpinnerPreference);</div><div class="line">        mEntries = a.getTextArray(R.styleable.SpinnerPreference_entries);</div><div class="line">        mEntryValues = a.getTextArray(R.styleable.SpinnerPreference_entryValues);</div><div class="line">        a.recycle();</div><div class="line">        mCurrentValue = mEntryValues[getPersistedInt(mDefaultPosition)];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> View <span class="title">onCreateView</span><span class="params">(ViewGroup parent)</span> </span>&#123;</div><div class="line">        View view = <span class="keyword">super</span>.onCreateView(parent);</div><div class="line">        view.requestFocus();</div><div class="line">        view.setOnClickListener(<span class="keyword">this</span>);</div><div class="line">        <span class="comment">//处理按键事件</span></div><div class="line">        view.setOnKeyListener(<span class="keyword">this</span>);</div><div class="line">        <span class="keyword">return</span> view;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onBindView</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onBindView(view);</div><div class="line">        mSpinner = (Spinner) view.findViewById(R.id.preference_spinner);</div><div class="line">        mSpinner.setAdapter(<span class="keyword">new</span> MySpinnerAdapter(mContext,mEntries));</div><div class="line">        mSpinner.setSelection(getPersistedInt(mDefaultPosition));</div><div class="line">        mSpinner.setOnItemSelectedListener(<span class="keyword">new</span> AdapterView.OnItemSelectedListener() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemSelected</span><span class="params">(AdapterView&lt;?&gt; parent, View view, <span class="keyword">int</span> position, <span class="keyword">long</span> id)</span> </span>&#123;</div><div class="line">                CharSequence value = mEntryValues[position];</div><div class="line">                <span class="keyword">if</span> (!value.equals(mCurrentValue))&#123;</div><div class="line">                    mOnChangeListener.onPreferenceChange(SpinnerPreference.<span class="keyword">this</span>,value);</div><div class="line">                    mCurrentValue = value;</div><div class="line">                    SpinnerPreference.<span class="keyword">this</span>.persistInt(position);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNothingSelected</span><span class="params">(AdapterView&lt;?&gt; parent)</span> </span>&#123;</div><div class="line"></div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOnPreferenceChangeListener</span><span class="params">(OnPreferenceChangeListener onPreferenceChangeListener)</span> </span>&#123;</div><div class="line">        mOnChangeListener = onPreferenceChangeListener;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">        Log.d(TAG,<span class="string">"onClick....."</span>);</div><div class="line">        mSpinner.performClick();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onKey</span><span class="params">(View v, <span class="keyword">int</span> keyCode, KeyEvent event)</span> </span>&#123;</div><div class="line">        <span class="keyword">switch</span> (keyCode)&#123;</div><div class="line">            <span class="keyword">case</span> KeyEvent.KEYCODE_DPAD_CENTER:</div><div class="line">            <span class="keyword">case</span> KeyEvent.KEYCODE_ENTER:</div><div class="line">                mSpinner.performClick();</div><div class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/29/自定义SpinnerPreference/" data-id="cjbu74yxj000d57vgg3rz1yux" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spinner/">Spinner</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自定义View/">自定义View</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-Android APK 瘦身实战（二）——资源文件优化" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/06/13/Android APK 瘦身实战（二）——资源文件优化/" class="article-date">
-  <time datetime="2017-06-12T21:29:30.000Z" itemprop="datePublished">2017-06-12</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/13/Android APK 瘦身实战（二）——资源文件优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ShymanZhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShymanZhu’s blog">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/13/Android APK 瘦身实战（二）——资源文件优化/">Android APK瘦身实战（二）——资源文件优化</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/13/Android APK 瘦身实战（二）——资源文件优化/" itemprop="url">Android APK瘦身实战（二）——资源文件优化</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-12T21:29:30Z">
+                2017-06-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <blockquote>
+      
+
+      
+        
+          
+            <blockquote>
 <p>在前一篇文章——<a href="http://shymanzhu.com/2017/05/21/Android%20APK%20%E7%98%A6%E8%BA%AB%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94APK%E5%88%86%E6%9E%90/" target="_blank" rel="external">Android APK瘦身实战（一）APK分析</a>中，我们可以知道自己APK的大小构成，在知道APK的大小构成后，我们就可以针对特定的部分瘦身了。</p>
 </blockquote>
 <h2 id="删除无用资源"><a href="#删除无用资源" class="headerlink" title="删除无用资源"></a>删除无用资源</h2><p>  在APK中，资源文件占用了很大的比重，所以在APK瘦身的时候，首先可以考虑优化，资源文件，删除无用的音视频、图片资源。借助于Android Studio的分析工具，我们可以很方便找到未使用的资源文件。</p>
@@ -788,44 +1571,125 @@
 <p><a href="https://en.wikipedia.org/wiki/Portable_Network_Graphics" target="_blank" rel="external">Portable Network Graphics</a></p>
 <p><a href="https://www.w3.org/TR/PNG/" target="_blank" rel="external">Portable Network Graphics (PNG) Specification</a></p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/13/Android APK 瘦身实战（二）——资源文件优化/" data-id="cjbu74ywy000457vg6z6yqv5g" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/APK-瘦身/">APK 瘦身</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-Android APK 瘦身实战（一）——APK分析" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/05/21/Android APK 瘦身实战（一）——APK分析/" class="article-date">
-  <time datetime="2017-05-20T22:43:30.000Z" itemprop="datePublished">2017-05-20</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/21/Android APK 瘦身实战（一）——APK分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ShymanZhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShymanZhu’s blog">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/21/Android APK 瘦身实战（一）——APK分析/">Android APK 瘦身实战（一）——APK分析</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/21/Android APK 瘦身实战（一）——APK分析/" itemprop="url">Android APK 瘦身实战（一）——APK分析</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-20T22:43:30Z">
+                2017-05-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <blockquote>
+      
+
+      
+        
+          
+            <blockquote>
 <p>在开始APK瘦身前，先要分析这个APK有多大，就像想减肥，得知道自己有多胖、每天喝几瓶可乐、吃几包薯条对吧。</p>
 </blockquote>
 <p> 在Android Studio2.2开始，推出了一个新的功能——APK Analyzer。APK Analyzer旨在帮助分析你的APK，查看你的APK各组成部分的大小。APK Analyzer使用很简单，可以通过三种方式打开：</p>
@@ -855,44 +1719,125 @@
 <h2 id="应用对比"><a href="#应用对比" class="headerlink" title="应用对比"></a>应用对比</h2><p>在APK Analyzer中，我们可以比较两个应用的大小，比如我们在优化后，可以选择APK Analyzer窗口右上角的Compare with,选择未优化的APK进行比较，例如在我去掉了kotlin依赖后，对比应用是这样的：我们可以很直白的看到变化，dex比原来小了1.3M</p>
 <p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/apk_analyzye/apk_analyze_compare.png" alt="iamge"></p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/21/Android APK 瘦身实战（一）——APK分析/" data-id="cjbu74ywm000057vghk81iqw4" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/APK-瘦身/">APK 瘦身</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-Android TextClock 使用及源码解析" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/05/13/Android TextClock 使用及源码解析/" class="article-date">
-  <time datetime="2017-05-12T23:29:30.000Z" itemprop="datePublished">2017-05-12</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Android TextClock 使用及源码解析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ShymanZhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShymanZhu’s blog">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/13/Android TextClock 使用及源码解析/">Android TextClock 使用及源码解析</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/13/Android TextClock 使用及源码解析/" itemprop="url">Android TextClock 使用及源码解析</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-12T23:29:30Z">
+                2017-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <blockquote>
+      
+
+      
+        
+          
+            <blockquote>
 <p>TextClock 是Android用于显示当前时间或者日期的控件，并且支持用户自定义的日期或者时间格式。</p>
 </blockquote>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p> 比如我们要做一个下面效果图的界面，这里我们就可以使用TextClock来实现。</p>
@@ -930,124 +1875,308 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">/**</span></div><div class="line"> * Given a format string and a &#123;<span class="doctag">@link</span> java.util.Calendar&#125; object, returns a CharSequence</div><div class="line"> * containing the requested date.</div><div class="line"> * <span class="doctag">@param</span> inFormat the format string, as described in &#123;<span class="doctag">@link</span> android.text.format.DateFormat&#125;</div><div class="line"> * <span class="doctag">@param</span> inDate the date to format</div><div class="line"> * <span class="doctag">@return</span> a &#123;<span class="doctag">@link</span> CharSequence&#125; containing the requested text</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> CharSequence <span class="title">format</span><span class="params">(CharSequence inFormat, Calendar inDate)</span> </span>&#123;</div><div class="line">    SpannableStringBuilder s = <span class="keyword">new</span> SpannableStringBuilder(inFormat);<span class="comment">//将inFormat转化可变的字符串</span></div><div class="line">    <span class="keyword">int</span> count;</div><div class="line"></div><div class="line">    LocaleData localeData = LocaleData.get(Locale.getDefault());</div><div class="line"></div><div class="line">    <span class="keyword">int</span> len = inFormat.length();</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i += count) &#123;</div><div class="line">        count = <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> c = s.charAt(i);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (c == QUOTE) &#123;</div><div class="line">            count = appendQuotedText(s, i, len);</div><div class="line">            len = s.length();</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> ((i + count &lt; len) &amp;&amp; (s.charAt(i + count) == c)) &#123;</div><div class="line">            count++;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//replacement就是要替换inFormat中的时间日期的内容；比如inFormat是：“mm:ss”,当前时间是12分23秒</span></div><div class="line">		<span class="comment">//如果c为第一个“m”,那么replacement 就是“1”，</span></div><div class="line">        String replacement;</div><div class="line">        <span class="keyword">switch</span> (c) &#123;</div><div class="line">            <span class="keyword">case</span> <span class="string">'A'</span>:   <span class="comment">// 24小时制中的上午或者下午标志</span></div><div class="line">            <span class="keyword">case</span> <span class="string">'a'</span>:</div><div class="line">                replacement = localeData.amPm[inDate.get(Calendar.AM_PM) - Calendar.AM];</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'d'</span>:  <span class="comment">// 一个月中第几天</span></div><div class="line">                replacement = zeroPad(inDate.get(Calendar.DATE), count);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'c'</span>: <span class="comment">// 星期几</span></div><div class="line">            <span class="keyword">case</span> <span class="string">'E'</span>:</div><div class="line">                replacement = getDayOfWeekString(localeData,</div><div class="line">                                                 inDate.get(Calendar.DAY_OF_WEEK), count, c);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'K'</span>: <span class="comment">// hour in am/pm (0-11)  </span></div><div class="line">            <span class="keyword">case</span> <span class="string">'h'</span>: <span class="comment">// hour in am/pm (1-12)</span></div><div class="line">                &#123;</div><div class="line">                    <span class="keyword">int</span> hour = inDate.get(Calendar.HOUR);</div><div class="line">                    <span class="keyword">if</span> (c == <span class="string">'h'</span> &amp;&amp; hour == <span class="number">0</span>) &#123;</div><div class="line">                        hour = <span class="number">12</span>;</div><div class="line">                    &#125;</div><div class="line">                    replacement = zeroPad(hour, count);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'H'</span>: <span class="comment">// hour in day (0-23)</span></div><div class="line">            <span class="keyword">case</span> <span class="string">'k'</span>: <span class="comment">// hour in day (1-24) [but see note below]</span></div><div class="line">                &#123;</div><div class="line">                    <span class="keyword">int</span> hour = inDate.get(Calendar.HOUR_OF_DAY);</div><div class="line">                    <span class="comment">// Historically on Android 'k' was interpreted as 'H', which wasn't</span></div><div class="line">                    <span class="comment">// implemented, so pretty much all callers that want to format 24-hour</span></div><div class="line">                    <span class="comment">// times are abusing 'k'. http://b/8359981.</span></div><div class="line">                    <span class="keyword">if</span> (<span class="keyword">false</span> &amp;&amp; c == <span class="string">'k'</span> &amp;&amp; hour == <span class="number">0</span>) &#123;</div><div class="line">                        hour = <span class="number">24</span>;</div><div class="line">                    &#125;</div><div class="line">                    replacement = zeroPad(hour, count);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'L'</span>: <span class="comment">//一年中的月份</span></div><div class="line">            <span class="keyword">case</span> <span class="string">'M'</span>:</div><div class="line">                replacement = getMonthString(localeData,</div><div class="line">                                             inDate.get(Calendar.MONTH), count, c);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'m'</span>: <span class="comment">//一小时中的第几分钟</span></div><div class="line">                replacement = zeroPad(inDate.get(Calendar.MINUTE), count);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'s'</span>: <span class="comment">//一分钟第几秒</span></div><div class="line">                replacement = zeroPad(inDate.get(Calendar.SECOND), count);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'y'</span>: <span class="comment">//年份</span></div><div class="line">                replacement = getYearString(inDate.get(Calendar.YEAR), count);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'z'</span>: <span class="comment">//时区</span></div><div class="line">                replacement = getTimeZoneString(inDate, count);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                replacement = <span class="keyword">null</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (replacement != <span class="keyword">null</span>) &#123;</div><div class="line">            s.replace(i, i + count, replacement); <span class="comment">//替换时间日期格式中对应的字符（即上面case 语句中的字符）</span></div><div class="line">            count = replacement.length(); <span class="comment">// CARE: count is used in the for loop above</span></div><div class="line">            len = s.length();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (inFormat <span class="keyword">instanceof</span> Spanned) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SpannedString(s);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> s.toString();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>通过这个方法，我们会发现该方法里面定义的格式的字符和<a href="https://developer.android.google.cn/reference/java/text/SimpleDateFormat.html" target="_blank" rel="external">SimpleDateFormat</a> 中列举的是有出入的，这也解释了在使用的章节里面，最后的一个问题：为什么<code>YYYY&#39;X&#39;M&#39;X&#39;d</code> 不能得到我们期望的日期。因为在DateFormat.format()方法中的case语句中根本没有格式”Y” 啊！   <strong>所以当我们在定义TextClock的format时最好的方式就是参考DateFormat.format()方法，看看它支持哪些格式</strong></p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/13/Android TextClock 使用及源码解析/" data-id="cjbu74yx1000557vgvhqolqcw" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TextClock/">TextClock</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+  </section>
 
   
-
-
-  <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
-</section>
-        
-          <aside id="sidebar">
-  
-    
 
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/APK-瘦身/">APK 瘦身</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lifecycle/">Lifecycle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LiveData/">LiveData</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spinner/">Spinner</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextClock/">TextClock</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thread/">Thread</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ViewModel/">ViewModel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自定义View/">自定义View</a></li></ul>
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
 
-
-  
+  <aside id="sidebar" class="sidebar">
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/APK-瘦身/" style="font-size: 13.33px;">APK 瘦身</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 10px;">Android Studio</a> <a href="/tags/Java/" style="font-size: 16.67px;">Java</a> <a href="/tags/Lifecycle/" style="font-size: 10px;">Lifecycle</a> <a href="/tags/LiveData/" style="font-size: 10px;">LiveData</a> <a href="/tags/Spinner/" style="font-size: 10px;">Spinner</a> <a href="/tags/TextClock/" style="font-size: 10px;">TextClock</a> <a href="/tags/Thread/" style="font-size: 13.33px;">Thread</a> <a href="/tags/ViewModel/" style="font-size: 10px;">ViewModel</a> <a href="/tags/架构/" style="font-size: 16.67px;">架构</a> <a href="/tags/自定义View/" style="font-size: 10px;">自定义View</a>
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ShymanZhu</p>
+              <p class="site-description motion-element" itemprop="description">To be a geek</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
     </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li></ul>
-    </div>
-  </div>
+  </aside>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2017/12/28/Android架构组件（三）——ViewModel/">Android架构组件（三）——ViewModel</a>
-          </li>
-        
-          <li>
-            <a href="/2017/12/23/Android架构组件（二）——LiveData/">Android 架构组件（二）——LiveData</a>
-          </li>
-        
-          <li>
-            <a href="/2017/12/02/Android 架构组件（一）——Lifecycle-Aware Components/">Android 架构组件（一）——Lifecycle-Aware Components</a>
-          </li>
-        
-          <li>
-            <a href="/2017/11/11/Java两种创建线程方式原理解析/">Java两种创建线程方式原理解析</a>
-          </li>
-        
-          <li>
-            <a href="/2017/07/23/如何正确的给ViewGroup设置OnClickListener/">如何正确的给ViewGroup设置OnClickListener</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
         
       </div>
-      <footer id="footer">
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ShymanZhu</span>
+
   
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2017 ShymanZhu<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-
   </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
 </body>
 </html>
