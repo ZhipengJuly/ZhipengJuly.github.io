@@ -1,0 +1,787 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="架构,ViewModel," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="上一篇文章讲到了Android架构组件之LiveData（Android架构组件（二）——LiveData)，现在我们再来看看另一个成员ViewModel。
+
+ViewModel是什么？&amp;emsp;ViewModel，从字面上理解的话，我们也能想到它肯定是跟视图(View)以及数据(Model)相关的。正像它字面意思一样，它是负责准备和管理和UI组件(Fragment/Activity)相关的数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android架构组件（三）——ViewModel">
+<meta property="og:url" content="http://yoursite.com/2017/12/28/Android架构组件（三）——ViewModel/index.html">
+<meta property="og:site_name" content="ShymanZhu’s blog">
+<meta property="og:description" content="上一篇文章讲到了Android架构组件之LiveData（Android架构组件（二）——LiveData)，现在我们再来看看另一个成员ViewModel。
+
+ViewModel是什么？&amp;emsp;ViewModel，从字面上理解的话，我们也能想到它肯定是跟视图(View)以及数据(Model)相关的。正像它字面意思一样，它是负责准备和管理和UI组件(Fragment/Activity)相关的数">
+<meta property="og:image" content="https://developer.android.google.cn/images/topic/libraries/architecture/viewmodel-lifecycle.png">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/viewmodel/class_viewmodel_1.png">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/viewmodel/sequency_viewmodel.png">
+<meta property="og:image" content="http://oq6yfhskd.bkt.clouddn.com/blog/viewmodel/lifecyle_viewmodel.png">
+<meta property="og:updated_time" content="2017-12-31T03:41:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android架构组件（三）——ViewModel">
+<meta name="twitter:description" content="上一篇文章讲到了Android架构组件之LiveData（Android架构组件（二）——LiveData)，现在我们再来看看另一个成员ViewModel。
+
+ViewModel是什么？&amp;emsp;ViewModel，从字面上理解的话，我们也能想到它肯定是跟视图(View)以及数据(Model)相关的。正像它字面意思一样，它是负责准备和管理和UI组件(Fragment/Activity)相关的数">
+<meta name="twitter:image" content="https://developer.android.google.cn/images/topic/libraries/architecture/viewmodel-lifecycle.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/28/Android架构组件（三）——ViewModel/"/>
+
+
+
+
+
+  <title> Android架构组件（三）——ViewModel | ShymanZhu’s blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100900902-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ShymanZhu’s blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/28/Android架构组件（三）——ViewModel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ShymanZhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/shymanzhu.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShymanZhu’s blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android架构组件（三）——ViewModel
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-27T22:08:30Z">
+                2017-12-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>上一篇文章讲到了Android架构组件之LiveData（<a href="http://shymanzhu.com/2017/12/23/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94LiveData/" target="_blank" rel="external">Android架构组件（二）——LiveData</a>)，现在我们再来看看另一个成员ViewModel。</p>
+</blockquote>
+<h2 id="ViewModel是什么？"><a href="#ViewModel是什么？" class="headerlink" title="ViewModel是什么？"></a>ViewModel是什么？</h2><p>&emsp;ViewModel，从字面上理解的话，我们也能想到它肯定是跟视图(View)以及数据(Model)相关的。正像它字面意思一样，它是负责准备和管理和UI组件(Fragment/Activity)相关的数据类，也就是说ViewModel是用来管理UI相关的数据的。同时ViewModel还可以用来负责UI组件间的通信，这一点后面我们会有例子说明。</p>
+<h2 id="为什么需要ViewModel？"><a href="#为什么需要ViewModel？" class="headerlink" title="为什么需要ViewModel？"></a>为什么需要ViewModel？</h2><p>&emsp;在看过前面两篇介绍<a href="http://shymanzhu.com/2017/12/02/Android%20%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94Lifecycle-Aware%20Components/" target="_blank" rel="external">Lifecycle</a>和<a href="http://shymanzhu.com/2017/12/23/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94LiveData/" target="_blank" rel="external">LiveData</a>的内容后，这个问题的基本就不用回答了。既然ViewModel是用来管理和UI组件有关的数据的，而LiveData又是这些数据的持有类，所以在使用LiveData的时候，就自然想到要使用ViewModel了。另外从ViewModel的定义，我们也能看到ViewModel还可以用于UI组件间的通信，回想下当初面试官问你Fragment之间怎么通信的问题，掌握ViewModel后就多了一种高逼格的回答了。</p>
+<h2 id="ViewModel基本使用"><a href="#ViewModel基本使用" class="headerlink" title="ViewModel基本使用"></a>ViewModel基本使用</h2><p>&emsp;前面在讲解LiveData时，我们已经使用了ViewModel，所以它的基本使用，在这里就不在赘述了，忘了的同学可以重新去翻一翻<a href="http://shymanzhu.com/2017/12/02/Android%20%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94Lifecycle-Aware%20Components/" target="_blank" rel="external">Android架构组件（二）——LiveData</a>。我们主要看下ViewModel的生命周期，以及它用于组件间通信的使用。</p>
+<h3 id="ViewModel生命周期"><a href="#ViewModel生命周期" class="headerlink" title="ViewModel生命周期"></a>ViewModel生命周期</h3><p>&emsp;我们看看ViewModel的生命周期，在官方文档中，用下面这张图来描述ViewModel的生命周期。</p>
+<p><img src="https://developer.android.google.cn/images/topic/libraries/architecture/viewmodel-lifecycle.png" alt=""></p>
+<p>&emsp;上图是用Activity作为例子，左侧表示Activity的生命周期状态，右侧绿色部分表示ViewModel的生命周期范围。当屏幕旋转的时候，Activity会被recreate，Activity会经过几个生命周期方法，但是这个时候ViewModel还是之前的对象，并没有被重新创建，只有当Activity的finish()方法被调用时，ViewModel.onCleared()方法会被调用，对象才会被销毁。这张图很好的描述了是当Activity被recreate时，ViewModel的生命周期。</p>
+<p>&emsp; 另外，有个注意的地方：<strong>在ViewModel中不要持有Activity的引用</strong>。为什么要注意这一点呢？从上面的图我们看到，当Activity被recreate时，ViewModel对象并没有被销毁，如果Model持有Activity的引用时就可能会导致内存泄漏。那如果你要使用到Context对象怎么办呢，那就使用ViewModel的子类AndroidViewModel吧。</p>
+<h3 id="用于组件间通信"><a href="#用于组件间通信" class="headerlink" title="用于组件间通信"></a>用于组件间通信</h3><p>&emsp; 下面我们看下ViewModel用于Fragment之间通信的例子。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by shymanzhu on 2017/12/26.</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CommunicateViewModel</span> <span class="keyword">extends</span> <span class="title">ViewModel</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"CommunicateViewModel"</span>;</div><div class="line">    <span class="keyword">private</span> MutableLiveData&lt;String&gt; mNameLiveData;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> LiveData&lt;String&gt; <span class="title">getName</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">if</span> (mNameLiveData == <span class="keyword">null</span>) &#123;</div><div class="line">            mNameLiveData = <span class="keyword">new</span> MutableLiveData&lt;&gt;();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> mNameLiveData;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span> (mNameLiveData != <span class="keyword">null</span>) &#123;</div><div class="line">            Log.d(TAG, <span class="string">"setName: "</span> + name);</div><div class="line">            mNameLiveData.setValue(name);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCleared</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCleared();</div><div class="line">        mNameLiveData = <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by shymanzhu on 2017/12/26.</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FragmentOne</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> CommunicateViewModel mCommunicateViewModel;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> FragmentOne <span class="title">getInstance</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> FragmentOne();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        mCommunicateViewModel = ViewModelProviders.of(getActivity()).get(CommunicateViewModel.class);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Nullable</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        View view = inflater.inflate(R.layout.fragment_one, container, <span class="keyword">false</span>);</div><div class="line">        ButterKnife.bind(<span class="keyword">this</span>, view);</div><div class="line">        <span class="keyword">return</span> view;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@OnClick</span>(R.id.btn_set_name)</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onViewClicked</span><span class="params">(View v)</span></span>&#123;</div><div class="line">        <span class="keyword">switch</span> (v.getId())&#123;</div><div class="line">            <span class="keyword">case</span> R.id.btn_set_name:</div><div class="line">                mCommunicateViewModel.setName(<span class="string">"Jane"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by shymanzhu on 2017/12/26.</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FragmentTwo</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</div><div class="line">    <span class="meta">@BindView</span>(R.id.tv_name)</div><div class="line">    TextView mTvName;</div><div class="line">    <span class="keyword">private</span> CommunicateViewModel mCommunicateViewModel;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> FragmentTwo <span class="title">getInstance</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> FragmentTwo();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        mCommunicateViewModel = ViewModelProviders.of(getActivity()).get(CommunicateViewModel.class);</div><div class="line">        mCommunicateViewModel.getName().observe(<span class="keyword">this</span>, name -&gt; mTvName.setText(name));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Nullable</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        View view = inflater.inflate(R.layout.fragment_two, container, <span class="keyword">false</span>);</div><div class="line">        ButterKnife.bind(<span class="keyword">this</span>, view);</div><div class="line">        <span class="keyword">return</span> view;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&emsp; 代码逻辑很简单，首先定义一个CommunicateViewModel类，继承自ViewModel。然后定义两个Fragment：FragmentOne和FragmentTwo。在FragmentOne中改变CommunicateViewModel中LiveData保存的数据，然后在FragmentTwo中会收到数据改变的通知。这样一个过程就完成了FragmentOne和FragmentTwo之间的一次简单的通信。至于其中的原理，相信看过<a href="http://blog.csdn.net/zhuzp_blog/article/details/78871527" target="_blank" rel="external">LiveData</a>这篇文章话，这都不是问题了。在上面的例子中有个小陷阱：在初始化mCommunicateViewModel时，ViewModelProviders.of()方法传入的是Activity对象，如果你改成Fragment对象，那FragmentTwo里就只能傻等了，永远不会收到数据改变的通知。因为如果传给方法ViewModelProviders.of()的对象不同时，最终得到的就不是同一个ViewModel对象，这一点也可以通过打印两个Fragment中的mCommunicateViewModel验证。</p>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>&emsp; 在讲ViewModel的原理时，我们还是延续前面的传统，先理清ViewModel相关的类图，然后理清ViewModel使用的时序图，最后就是根据时序图分析源码。</p>
+<h3 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h3><p>&emsp;废话不多说，直接上ViewModel相关的类图：</p>
+<p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/viewmodel/class_viewmodel_1.png" alt=""></p>
+<ul>
+<li><p>ViewModelProviders是ViewModel工具类，该类提供了通过Fragment和Activity得到ViewModel的方法，而具体实现又是有ViewModelProvider实现的。ViewModelProvider是实现ViewModel创建、获取的工具类。在ViewModelProvider中定义了一个创建ViewModel的接口类——Factory。ViewModelProvider中有个ViewModelStore对象，用于存储ViewModel对象。</p>
+</li>
+<li><p>ViewModelStore是存储ViewModel的类，具体实现是通过HashMap来保存ViewModle对象。</p>
+</li>
+<li><p>ViewModel是个抽象类，里面只定义了一个onCleared()方法，该方法在ViewModel不在被使用时调用。ViewModel有一个子类AndroidViewModel，这个类是便于要在ViewModel中使用Context对象，因为我们前面提到是不能在ViewModel中持有Activity的引用。</p>
+</li>
+<li><p>ViewModelStores是ViewModelStore的工厂方法类，它会关联HolderFragment，HolderFragment有个嵌套类——HolderFragmentManager。</p>
+<p>​</p>
+</li>
+</ul>
+<p>类图要说明的内容就是以上几点了，对于UML类图中的关联、聚合、组合的关系，个人觉得比较难区分，在这里找到了一个比较好的回答<a href="https://stackoverflow.com/questions/885937/what-is-the-difference-between-association-aggregation-and-composition" target="_blank" rel="external">What is the difference between association, aggregation and composition?</a></p>
+<h3 id="时序图"><a href="#时序图" class="headerlink" title="时序图"></a>时序图</h3><p>&emsp;在使用ViewModel的例子中，也许你会察觉得到一个ViewModel对象需要的步骤有点多啊，怎么不直接new一个出来呢？在你看到ViewModel的类图关系后，你应该就能明白了，因为是会缓存ViewModel对象的。下面以在Fragment中得到ViewModel对象为例看下整个过程的时序图。</p>
+<p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/viewmodel/sequency_viewmodel.png" alt="sequence viewmodle"></p>
+<p>&emsp;时序图看起来比较复杂，但是它只描述了两个过程：</p>
+<ul>
+<li>得到ViewModel对象。</li>
+<li>HolderFragment被销毁时，ViewModel收到onCleared()通知。</li>
+</ul>
+<p>&emsp;读者朋友们可以根据这个时序结合源码看下具体的实现，这个也是我们下面要讲的内容——<strong>源码分析</strong>。</p>
+<h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3><p>&emsp;根据上面时序图中的内容，我们从两个方面着手研究下ViewModel相关源码。</p>
+<h4 id="获取ViewModel对象"><a href="#获取ViewModel对象" class="headerlink" title="获取ViewModel对象"></a>获取ViewModel对象</h4><p>&emsp;得到ViweModel对象，首先是通过ViewModelProviders.of()方法得到ViewModelProvider对象，然后调用ViewModelProvider.get()方法得到ViewModel对象。</p>
+<h5 id="一、得到ViewModelProvider对象"><a href="#一、得到ViewModelProvider对象" class="headerlink" title="一、得到ViewModelProvider对象"></a>一、得到ViewModelProvider对象</h5><p>&emsp;直接看ViewModelProviders类的具体实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewModelProviders</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@SuppressLint</span>(<span class="string">"StaticFieldLeak"</span>)</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> DefaultFactory sDefaultFactory;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">initializeFactoryIfNeeded</span><span class="params">(Application application)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (sDefaultFactory == <span class="keyword">null</span>) &#123;</div><div class="line">            sDefaultFactory = <span class="keyword">new</span> DefaultFactory(application);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Application <span class="title">checkApplication</span><span class="params">(Activity activity)</span> </span>&#123;</div><div class="line">        Application application = activity.getApplication();</div><div class="line">        <span class="keyword">if</span> (application == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Your activity/fragment is not yet attached to "</span></div><div class="line">                    + <span class="string">"Application. You can't request ViewModel before onCreate call."</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> application;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Activity <span class="title">checkActivity</span><span class="params">(Fragment fragment)</span> </span>&#123;</div><div class="line">        Activity activity = fragment.getActivity();</div><div class="line">        <span class="keyword">if</span> (activity == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Can't create ViewModelProvider for detached fragment"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> activity;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@MainThread</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ViewModelProvider <span class="title">of</span><span class="params">(@NonNull Fragment fragment)</span> </span>&#123;</div><div class="line">        initializeFactoryIfNeeded(checkApplication(checkActivity(fragment)));</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ViewModelProvider(ViewModelStores.of(fragment), sDefaultFactory);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@MainThread</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ViewModelProvider <span class="title">of</span><span class="params">(@NonNull FragmentActivity activity)</span> </span>&#123;</div><div class="line">        initializeFactoryIfNeeded(checkApplication(activity));</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ViewModelProvider(ViewModelStores.of(activity), sDefaultFactory);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="meta">@MainThread</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ViewModelProvider <span class="title">of</span><span class="params">(@NonNull Fragment fragment, @NonNull Factory factory)</span> </span>&#123;</div><div class="line">        checkApplication(checkActivity(fragment));</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ViewModelProvider(ViewModelStores.of(fragment), factory);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@MainThread</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ViewModelProvider <span class="title">of</span><span class="params">(@NonNull FragmentActivity activity,</span></span></div><div class="line">            @NonNull Factory factory) &#123;</div><div class="line">        checkApplication(activity);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ViewModelProvider(ViewModelStores.of(activity), factory);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"WeakerAccess"</span>)</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultFactory</span> <span class="keyword">extends</span> <span class="title">ViewModelProvider</span>.<span class="title">NewInstanceFactory</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">private</span> Application mApplication;</div><div class="line"></div><div class="line">        <span class="comment">/**</span></div><div class="line">         * Creates a &#123;<span class="doctag">@code</span> DefaultFactory&#125;</div><div class="line">         *</div><div class="line">         * <span class="doctag">@param</span> application an application to pass in &#123;<span class="doctag">@link</span> AndroidViewModel&#125;</div><div class="line">         */</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">DefaultFactory</span><span class="params">(@NonNull Application application)</span> </span>&#123;</div><div class="line">            mApplication = application;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@NonNull</span></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="keyword">public</span> &lt;T extends ViewModel&gt; <span class="function">T <span class="title">create</span><span class="params">(@NonNull Class&lt;T&gt; modelClass)</span> </span>&#123;</div><div class="line">            <span class="keyword">if</span> (AndroidViewModel.class.isAssignableFrom(modelClass)) &#123;</div><div class="line">                <span class="comment">//noinspection TryWithIdenticalCatches</span></div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    <span class="keyword">return</span> modelClass.getConstructor(Application.class).newInstance(mApplication);</div><div class="line">                &#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</div><div class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Cannot create an instance of "</span> + modelClass, e);</div><div class="line">                &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</div><div class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Cannot create an instance of "</span> + modelClass, e);</div><div class="line">                &#125; <span class="keyword">catch</span> (InstantiationException e) &#123;</div><div class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Cannot create an instance of "</span> + modelClass, e);</div><div class="line">                &#125; <span class="keyword">catch</span> (InvocationTargetException e) &#123;</div><div class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Cannot create an instance of "</span> + modelClass, e);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">super</span>.create(modelClass);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&emsp;ViewModelProviders提供了四个of()方法，四个方法功能类似，其中of(FragmentActivity activity, Factory factory)和of(Fragment fragment, Factory factory)提供了自定义创建ViewModel的方法。我们在时序图中使用of(Fragment fragment)最为研究对象，这里我们也从该方法开始研究，在该方法中主要有两个步骤。</p>
+<h6 id="1，判断是否需要初始化默认的Factory"><a href="#1，判断是否需要初始化默认的Factory" class="headerlink" title="1，判断是否需要初始化默认的Factory"></a>1，判断是否需要初始化默认的Factory</h6><p>&emsp;这一过程很简单：通过调用initializeFactoryIfNeeded()方法判断是否需要初始化mDefaultFactory变量。在此之前又会判断Fragment的是否Attached to Activity，Activity的Application对象是否为空。</p>
+<h6 id="2，创建一个ViewModelProvider对象。"><a href="#2，创建一个ViewModelProvider对象。" class="headerlink" title="2，创建一个ViewModelProvider对象。"></a>2，创建一个ViewModelProvider对象。</h6><p>&emsp;创建ViewModel对象看似很简单，一行代码搞定<code>new ViewModelProvider(ViewModelStores.of(fragment), sDefaultFactory)</code>。但是里面的里面的逻辑比较深，我们慢慢把它抽丝剥茧，看看有多深。</p>
+<p>&emsp;先看看ViewModelStores.of()方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@MainThread</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ViewModelStore <span class="title">of</span><span class="params">(@NonNull Fragment fragment)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> holderFragmentFor(fragment).getViewModelStore();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&emsp;又是一行代码，holderFragmentFor()是HolderFragment的静态方法，HolderFragment继承自Fragment。我们先看holderFragment()方法的具体实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@hide</span></div><div class="line"> */</div><div class="line"><span class="meta">@RestrictTo</span>(RestrictTo.Scope.LIBRARY_GROUP)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> HolderFragment <span class="title">holderFragmentFor</span><span class="params">(Fragment fragment)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> sHolderFragmentManager.holderFragmentFor(fragment);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> ViewModelStore <span class="title">getViewModelStore</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> mViewModelStore; <span class="comment">//返回ViewModelStore对象</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&emsp;额，holderFragmentFor()又是一行代码，继续看HolderFragmentManager.holderFragmentFor()方法的具体实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="function">HolderFragment <span class="title">holderFragmentFor</span><span class="params">(Fragment parentFragment)</span> </span>&#123;</div><div class="line">    FragmentManager fm = parentFragment.getChildFragmentManager();</div><div class="line">    HolderFragment holder = findHolderFragment(fm); <span class="comment">// 在activity和back stack中查找parentFragment</span></div><div class="line">    <span class="keyword">if</span> (holder != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> holder;</div><div class="line">    &#125;</div><div class="line">    holder = mNotCommittedFragmentHolders.get(parentFragment); </div><div class="line">    <span class="keyword">if</span> (holder != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> holder;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 注册Fragment生命周期回调</span></div><div class="line">    parentFragment.getFragmentManager()</div><div class="line">            .registerFragmentLifecycleCallbacks(mParentDestroyedCallback, <span class="keyword">false</span>);</div><div class="line">    holder = createHolderFragment(fm); <span class="comment">//创建HolderFragment对象。</span></div><div class="line">    mNotCommittedFragmentHolders.put(parentFragment, holder);</div><div class="line">    <span class="keyword">return</span> holder;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span> FragmentLifecycleCallbacks mParentDestroyedCallback =</div><div class="line">    <span class="keyword">new</span> FragmentLifecycleCallbacks() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFragmentDestroyed</span><span class="params">(FragmentManager fm, Fragment parentFragment)</span> </span>&#123;</div><div class="line">            <span class="keyword">super</span>.onFragmentDestroyed(fm, parentFragment);</div><div class="line">            HolderFragment fragment = mNotCommittedFragmentHolders.remove(</div><div class="line">                    parentFragment);</div><div class="line">            <span class="keyword">if</span> (fragment != <span class="keyword">null</span>) &#123;</div><div class="line">                Log.e(LOG_TAG, <span class="string">"Failed to save a ViewModel for "</span> + parentFragment);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> HolderFragment <span class="title">createHolderFragment</span><span class="params">(FragmentManager fragmentManager)</span> </span>&#123;</div><div class="line">    HolderFragment holder = <span class="keyword">new</span> HolderFragment(); <span class="comment">// 创建HolderFragment对象</span></div><div class="line">    fragmentManager.beginTransaction().add(holder, HOLDER_TAG).commitAllowingStateLoss();</div><div class="line">    <span class="keyword">return</span> holder;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">HolderFragment</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">//这个是关键，这就使得Activity被recreate时，Fragment的onDestroy()和onCreate()不会被调用</span></div><div class="line">    setRetainInstance(<span class="keyword">true</span>); </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&emsp;在createHolderFragment()方法中，你也许发现调用FragmentTransaction.add()方法并没有传一个定义在layout文件中的id进去，而且你去看HolderFragment并没有重写Fragment.onCreateView()方法。这个有点反常，这是为什么呢？ 这个疑惑可以从HolderFragment()构造方法中得到解答。在构造方法中调用了setRetainInstance(true)方法，该方法会使得HolderFragment所在的Activity被recreate时，HolderFragment不会被recreate，自然它就不会走onDestroy()、onCreate()方法。为什么不让HolderFragment被recreate呢？这里先卖个关子，等到在讲时序图中步骤二时我们再讲。</p>
+<p>&emsp;到此为止，我们已经得到了ViewStore对象，前面我们在创建ViewModelProvider对象是通过这行代码实现的<code>new ViewModelProvider(ViewModelStores.of(fragment), sDefaultFactory)</code>现在再看下ViewModelProvider的构造方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">ViewModelProvider</span><span class="params">(@NonNull ViewModelStore store, @NonNull Factory factory)</span> </span>&#123;</div><div class="line">    mFactory = factory;</div><div class="line">    <span class="keyword">this</span>.mViewModelStore = store; <span class="comment">// 这个ViewStore对象实际上是HolderFragment中的ViewStore对象。</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="二、得到ViewModel对象"><a href="#二、得到ViewModel对象" class="headerlink" title="二、得到ViewModel对象"></a>二、得到ViewModel对象</h5><p>&emsp;在上面我们已经得到了ViewModelProvider对象，现在就可以通过ViewModelProvider.get()方法得到ViewModel对象，继续看下该方法的具体实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> &lt;T extends ViewModel&gt; <span class="function">T <span class="title">get</span><span class="params">(@NonNull Class&lt;T&gt; modelClass)</span> </span>&#123;</div><div class="line">    String canonicalName = modelClass.getCanonicalName();</div><div class="line">    <span class="keyword">if</span> (canonicalName == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Local and anonymous classes can not be ViewModels"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> get(DEFAULT_KEY + <span class="string">":"</span> + canonicalName, modelClass);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@MainThread</span></div><div class="line"><span class="keyword">public</span> &lt;T extends ViewModel&gt; <span class="function">T <span class="title">get</span><span class="params">(@NonNull String key, @NonNull Class&lt;T&gt; modelClass)</span> </span>&#123;</div><div class="line">    ViewModel viewModel = mViewModelStore.get(key);  <span class="comment">//从缓存中查找是否有已有ViewModel对象。</span></div><div class="line"></div><div class="line">    <span class="keyword">if</span> (modelClass.isInstance(viewModel)) &#123;</div><div class="line">        <span class="comment">//noinspection unchecked</span></div><div class="line">        <span class="keyword">return</span> (T) viewModel;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">//noinspection StatementWithEmptyBody</span></div><div class="line">        <span class="keyword">if</span> (viewModel != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="comment">// <span class="doctag">TODO:</span> log a warning.</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    viewModel = mFactory.create(modelClass); <span class="comment">//创建ViewModel对象，然后缓存起来。</span></div><div class="line">    mViewModelStore.put(key, viewModel);</div><div class="line">    <span class="comment">//noinspection unchecked</span></div><div class="line">    <span class="keyword">return</span> (T) viewModel;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&emsp; ViewModelProvider.get()方法比较简单，该说的都在注释中写明了。最后我们看下ViewModelStore类的具体实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewModelStore</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> HashMap&lt;String, ViewModel&gt; mMap = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(String key, ViewModel viewModel)</span> </span>&#123;</div><div class="line">        ViewModel oldViewModel = mMap.get(key);</div><div class="line">        <span class="keyword">if</span> (oldViewModel != <span class="keyword">null</span>) &#123;</div><div class="line">            oldViewModel.onCleared();</div><div class="line">        &#125;</div><div class="line">        mMap.put(key, viewModel);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">final</span> ViewModel <span class="title">get</span><span class="params">(String key)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> mMap.get(key);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     *  Clears internal storage and notifies ViewModels that they are no longer used.</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span> (ViewModel vm : mMap.values()) &#123;</div><div class="line">            vm.onCleared();</div><div class="line">        &#125;</div><div class="line">        mMap.clear();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&emsp;ViewModelStore是缓存ViewModel的类，put()、get()方法用于存取ViewModel对象，另外提供了clear()方法用于清空缓存的ViewModel对象，在该方法中会调用ViewModel.onCleared()方法通知ViewModel对象不再被使用。</p>
+<p>####ViewModel收到onCleared()通知。</p>
+<p>&emsp;在前面我们提到，在HolderFragment的构造方法中调用了<code>setRetainInstance(true);</code>目的是为了在其所在的Activity被recreate时，HolderFragment不会被recreate，为什么要这么做呢（之前面卖的关子），那就要看下它的onDestroy()方法了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onDestroy();</div><div class="line">    mViewModelStore.clear();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&emsp;在onDestroy()方法中调用了ViewModelStore.clear()方法，我们知道在该方法中会调用ViewModel的onCleared()方法。在你看了HolderFragment源码后，或许你会有个疑问，mViewModelStore保存的ViewModel对象是在哪里添加的呢？ 细心的话，你会发现在ViewModelProvider的构造方法中，已经将HolderFragment中的ViwModelStore对象mViewModelStore的引用传递给了ViewModelProvider中的mViewModelStore，而在ViewModelProvider.get()方法中会向mViewModelStore添加ViewModel对象。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>&emsp;总结，额….还是由你们来完成，抛一个问题来作为总结吧：为什么ViewModel的生命周期比使用它的Activity/Fragment的生命周期更长呢？ 如果你有认真看完这篇文章，我相信这个问题是难不倒你，如果没想到，那就多看几遍吧。最后，提供一张图来帮助你想这个问题。</p>
+<p><img src="http://oq6yfhskd.bkt.clouddn.com/blog/viewmodel/lifecyle_viewmodel.png" alt="lifecyle_viewmodel"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/架构/" rel="tag"># 架构</a>
+          
+            <a href="/tags/ViewModel/" rel="tag"># ViewModel</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/23/Android架构组件（二）——LiveData/" rel="next" title="Android 架构组件（二）——LiveData">
+                <i class="fa fa-chevron-left"></i> Android 架构组件（二）——LiveData
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/shymanzhu.JPG"
+               alt="ShymanZhu" />
+          <p class="site-author-name" itemprop="name">ShymanZhu</p>
+           
+              <p class="site-description motion-element" itemprop="description">To be a geek</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ViewModel是什么？"><span class="nav-number">1.</span> <span class="nav-text">ViewModel是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要ViewModel？"><span class="nav-number">2.</span> <span class="nav-text">为什么需要ViewModel？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ViewModel基本使用"><span class="nav-number">3.</span> <span class="nav-text">ViewModel基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ViewModel生命周期"><span class="nav-number">3.1.</span> <span class="nav-text">ViewModel生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用于组件间通信"><span class="nav-number">3.2.</span> <span class="nav-text">用于组件间通信</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现原理"><span class="nav-number">4.</span> <span class="nav-text">实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类图"><span class="nav-number">4.1.</span> <span class="nav-text">类图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时序图"><span class="nav-number">4.2.</span> <span class="nav-text">时序图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码分析"><span class="nav-number">4.3.</span> <span class="nav-text">源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#获取ViewModel对象"><span class="nav-number">4.3.1.</span> <span class="nav-text">获取ViewModel对象</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#一、得到ViewModelProvider对象"><span class="nav-number">4.3.1.1.</span> <span class="nav-text">一、得到ViewModelProvider对象</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1，判断是否需要初始化默认的Factory"><span class="nav-number">4.3.1.1.1.</span> <span class="nav-text">1，判断是否需要初始化默认的Factory</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2，创建一个ViewModelProvider对象。"><span class="nav-number">4.3.1.1.2.</span> <span class="nav-text">2，创建一个ViewModelProvider对象。</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二、得到ViewModel对象"><span class="nav-number">4.3.1.2.</span> <span class="nav-text">二、得到ViewModel对象</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ShymanZhu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
